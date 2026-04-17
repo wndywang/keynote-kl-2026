@@ -1155,8 +1155,8 @@
         <div class="bl-play-btn step" data-step="6" onclick="openNewsVideo()">
           <div class="bl-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="bl-play-text">
-            <div class="bl-play-title">Watch: Public reaction to AI influencers</div>
-            <div class="bl-play-sub">ABC News &middot; Click to play with sound</div>
+            <div class="bl-play-title">Watch: J.Crew AI backlash</div>
+            <div class="bl-play-sub">Click to play with sound</div>
           </div>
         </div>
       </div>
@@ -1582,6 +1582,16 @@
 
   /* ── Advance (step or slide) ──────────────────────────────── */
   function advance() {
+    // If news video overlay is open, close it and jump to next slide
+    const overlay = document.getElementById('newsOverlay');
+    if (overlay && overlay.classList.contains('open')) {
+      const vid = document.getElementById('newsVid');
+      overlay.classList.remove('open');
+      if (vid) { vid.pause(); vid.currentTime = 0; }
+      if (current < TOTAL - 1) showSlide(current + 1);
+      return;
+    }
+
     const steps = stepMap[current];
     if (steps.length === 0) {
       if (current < TOTAL - 1) showSlide(current + 1);
@@ -1639,7 +1649,9 @@
 
   /* ── On-step hooks ────────────────────────────────────────── */
   function onStep(slideIdx, stepNum) {
-    // Slide 8 — market number & bars (shifted +1: story now at idx 1)
+    // Slide 8 (backlash) — auto-open video on step 6
+    if (slideIdx === 7 && stepNum === 6) { openNewsVideo(); }
+    // Slide 9 — market number & bars (shifted +1: story now at idx 1)
     if (slideIdx === 8 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
     if (slideIdx === 8 && stepNum === 2) {
       setTimeout(() => {

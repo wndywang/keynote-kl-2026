@@ -1621,6 +1621,7 @@
     const vid = document.getElementById('newsVid');
     overlay.classList.add('open');
     vid.currentTime = 0;
+    vid.playbackRate = 1.6;
     vid.play();
   }
   function closeNewsVideo(e) {

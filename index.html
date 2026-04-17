@@ -742,17 +742,18 @@
     /* ============================================================
        UGC WALL SLIDE
     ============================================================ */
-    #s-wall { background:#000; flex-direction:column; gap:0; padding:3.5vh 5vw 3vh; }
+    #s-wall { background:#000; flex-direction:column; gap:0; padding:3vh 5vw 2.5vh; justify-content:space-between; }
 
     .wall-label {
       font-size:clamp(10px,.9vw,14px); font-weight:700;
       letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
-      margin-bottom:2.5vh;
+      margin-bottom:1.8vh; flex-shrink:0;
       opacity:0; animation:slowFadeIn 1s ease forwards; animation-delay:.3s;
     }
     .wall-grid {
       display:grid; grid-template-columns:repeat(4,1fr);
       gap:1.6vw; width:100%; max-width:980px;
+      max-height:74vh; overflow:hidden; flex-shrink:1;
     }
     .wall-phone {
       aspect-ratio:9/18; border-radius:20px; overflow:hidden;
@@ -766,8 +767,8 @@
 
     .wall-caption {
       font-size:clamp(14px,1.5vw,26px); font-weight:700;
-      color:var(--muted); text-align:center; margin-top:2.5vh;
-      max-width:68vw; line-height:1.4;
+      color:var(--muted); text-align:center; margin-top:1.8vh;
+      max-width:68vw; line-height:1.4; flex-shrink:0;
     }
     .wall-caption em { font-style:normal; color:var(--white); }
 
@@ -996,7 +997,7 @@
       </div>
       <div class="s8-phone">
         <div class="s8-phone-notch"></div>
-        <video src="assets/ugc-5.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+        <video src="assets/ugc-v3.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         <div class="s8-phone-overlay"></div>
         <div class="s8-phone-txt">"My friend told me about this"</div>
       </div>
@@ -1010,7 +1011,7 @@
     <div class="wall-label">This is what real looks like.</div>
     <div class="wall-grid">
       <div class="wall-phone" id="wp1">
-        <video src="assets/ugc-talk.mp4" autoplay muted loop playsinline></video>
+        <video src="assets/ugc-v4.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="wall-phone" id="wp2">
         <video src="assets/ugc-4.mp4" autoplay muted loop playsinline></video>

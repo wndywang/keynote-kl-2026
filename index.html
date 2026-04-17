@@ -663,6 +663,77 @@
     .s18-seats strong { color:var(--lime); }
     .s18-tagline   { font-size:clamp(16px,2vw,34px); font-weight:700; text-align:center; letter-spacing:-0.02em; line-height:1.35; max-width:68vw; }
     .s18-tagline em{ font-style:normal; color:var(--muted); }
+
+    /* ============================================================
+       SLIDE 3 — VISUAL OVERRIDES (real image/video)
+    ============================================================ */
+    #s3 .s3-compare {
+      display:flex; align-items:flex-start; justify-content:center;
+      gap:4vw; width:100%; max-width:1100px;
+    }
+    .s3-vis-frame {
+      border-radius:18px; overflow:hidden; position:relative;
+      box-shadow:0 20px 56px rgba(0,0,0,.8);
+    }
+    .s3-vis-frame.bad {
+      width:100%; aspect-ratio:4/3;
+      border:3px solid var(--red);
+    }
+    .s3-vis-frame.good {
+      width:clamp(130px,12vw,210px); aspect-ratio:9/18;
+      border-radius:26px; border:4px solid var(--lime);
+      transform:rotate(-2deg);
+      box-shadow:0 20px 56px rgba(0,0,0,.8), 0 0 40px rgba(204,255,0,.18);
+    }
+    .s3-vis-frame img, .s3-vis-frame video {
+      width:100%; height:100%; object-fit:cover; display:block;
+    }
+    .s3-vis-badge {
+      position:absolute; top:12px; right:12px;
+      font-size:clamp(7px,.65vw,11px); font-weight:800;
+      padding:4px 12px; border-radius:20px;
+      letter-spacing:.1em; text-transform:uppercase; z-index:3;
+    }
+    .s3-vis-badge.bad  { background:rgba(255,68,68,.92); color:#fff; }
+    .s3-vis-badge.good { background:var(--lime); color:#000; }
+    .s3-vis-stat {
+      position:absolute; bottom:0; left:0; right:0; padding:14px;
+      background:linear-gradient(to top,rgba(0,0,0,.92) 0%,transparent 100%); z-index:2;
+    }
+    .s3-vis-stat p { font-size:clamp(7px,.68vw,11px); color:rgba(255,255,255,.65); line-height:1.5; font-weight:500; margin:0; }
+
+    /* ============================================================
+       UGC WALL SLIDE
+    ============================================================ */
+    #s-wall { background:#000; flex-direction:column; gap:0; padding:3.5vh 5vw 3vh; }
+
+    .wall-label {
+      font-size:clamp(10px,.9vw,14px); font-weight:700;
+      letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
+      margin-bottom:2.5vh;
+      opacity:0; animation:slowFadeIn 1s ease forwards; animation-delay:.3s;
+    }
+    .wall-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1.6vw; width:100%; max-width:980px;
+    }
+    .wall-phone {
+      aspect-ratio:9/18; border-radius:20px; overflow:hidden;
+      position:relative; border:2.5px solid rgba(255,255,255,.13);
+      box-shadow:0 14px 40px rgba(0,0,0,.75);
+      opacity:0; transform:translateY(18px);
+      transition:opacity .65s ease, transform .65s cubic-bezier(0.16,1,0.3,1);
+    }
+    .wall-phone.vis { opacity:1; transform:translateY(0); }
+    .wall-phone video { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .wall-caption {
+      font-size:clamp(14px,1.5vw,26px); font-weight:700;
+      color:var(--muted); text-align:center; margin-top:2.5vh;
+      max-width:68vw; line-height:1.4;
+    }
+    .wall-caption em { font-style:normal; color:var(--white); }
+
   </style>
 </head>
 <body>
@@ -702,34 +773,28 @@
   <div class="slide" id="s3">
     <div class="s3-label step" data-step="1">AI SLOP.</div>
     <div class="s3-compare step" data-step="2">
-      <!-- AI polished -->
-      <div class="s3-phone-wrap">
-        <div class="s3-phone s3-ai">
-          <div class="s3-ai-glow"></div>
-          <div class="s3-ai-face"></div>
-          <div class="s3-ai-shine"></div>
-          <div class="s3-ai-badge">AI Generated</div>
-          <div class="s3-ai-bottom">
-            <div class="s3-ai-tag">✨ Our new formula — because you deserve the best ✨<br>@brandaccount</div>
-            <div class="s3-ai-stat">2,341 likes &nbsp;·&nbsp; 0.3% engagement</div>
+      <!-- BAD: Real AI slop example -->
+      <div class="s3-phone-wrap" style="flex:1.7;">
+        <div class="s3-vis-frame bad">
+          <img src="assets/ai-slop-grid.jpeg" alt="18 identical AI-generated creators promoting the same product">
+          <div class="s3-vis-badge bad">AI Generated</div>
+          <div class="s3-vis-stat">
+            <p>18 videos. Same face. Same lighting. Same pose. Your audience knows immediately.</p>
+            <p style="color:rgba(255,68,68,.85);font-weight:700;margin-top:5px;">2,341 likes &nbsp;·&nbsp; 0.3% engagement</p>
           </div>
         </div>
-        <div class="s3-card-label" style="color:var(--muted);">Volume. No soul.</div>
+        <div class="s3-card-label" style="color:var(--red);margin-top:.5vh;">Fake. Volume. Zero trust.</div>
       </div>
-      <!-- Real UGC -->
-      <div class="s3-phone-wrap">
-        <div class="s3-phone s3-ugc">
-          <div class="s3-ugc-warm"></div>
-          <div class="s3-ugc-grain"></div>
-          <div class="s3-ugc-face"></div>
-          <div class="s3-ugc-notch"></div>
-          <div class="s3-ugc-badge">Real UGC</div>
-          <div class="s3-ugc-bottom">
-            <div class="s3-ugc-text">"Okay I need to tell you about this... I've been using it for 3 weeks and I'm genuinely not okay 😭"</div>
-            <div class="s3-ugc-stat">47,200 likes &nbsp;·&nbsp; 8.2% engagement</div>
+      <!-- GOOD: Real UGC video -->
+      <div class="s3-phone-wrap" style="flex-shrink:0;">
+        <div class="s3-vis-frame good">
+          <video src="assets/ugc-1.mp4" autoplay muted loop playsinline></video>
+          <div class="s3-vis-badge good">Real UGC</div>
+          <div class="s3-vis-stat">
+            <p style="color:var(--lime);font-weight:700;">47,200 likes &nbsp;·&nbsp; 8.2% engagement</p>
           </div>
         </div>
-        <div class="s3-card-label" style="color:var(--lime);">Imperfect. Converts.</div>
+        <div class="s3-card-label" style="color:var(--lime);margin-top:1.2vh;">Real. Imperfect. Converts.</div>
       </div>
     </div>
   </div>
@@ -792,9 +857,19 @@
         <div class="s7-bar-track"><div class="s7-bar-fill micro" id="microBar"><span class="s7-bar-val dark">73%</span></div></div>
       </div>
     </div>
-    <div class="s7-kicker step" data-step="3">
-      Nano creators convert at <em>2–3×</em> the rate. Engagement above <em>8%.</em><br>
-      <span style="font-size:.7em;color:var(--muted);font-weight:500;">Why?</span>
+    <div class="step" data-step="3" style="display:flex;flex-direction:column;align-items:center;gap:2vh;width:78vw;max-width:920px;">
+      <div style="display:flex;gap:5vw;align-items:flex-end;justify-content:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh;">
+          <div style="width:clamp(52px,5.2vw,86px);height:clamp(52px,5.2vw,86px);border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:clamp(10px,.95vw,16px);font-weight:900;color:var(--muted);">0.8%</div>
+          <div style="font-size:clamp(9px,.78vw,12px);color:var(--muted);font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.4;">Macro<br>engagement</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh;">
+          <div style="width:clamp(108px,11vw,182px);height:clamp(108px,11vw,182px);border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:clamp(24px,2.6vw,44px);font-weight:900;color:#000;">6.4%</div>
+          <div style="font-size:clamp(9px,.78vw,12px);color:var(--lime);font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.4;">Nano<br>engagement</div>
+        </div>
+        <div style="font-size:clamp(22px,3vw,52px);font-weight:900;color:var(--white);padding-bottom:clamp(28px,3.5vh,56px);letter-spacing:-.03em;">= 8&times; more</div>
+      </div>
+      <div class="s7-kicker" style="margin-top:.5vh;">Same budget. Nano converts at <em>2&ndash;3&times;</em> the rate. <em>8&times;</em> the engagement.</div>
     </div>
   </div>
 
@@ -804,29 +879,29 @@
   <div class="slide" id="s8">
     <div class="s8-line1 step" data-step="1">AI made everything perfect.</div>
     <div class="s8-line2 step" data-step="2">So imperfection became<br>the most valuable thing<br>on the internet.</div>
-    <!-- Phone frames -->
+    <!-- Phone frames — real UGC videos -->
     <div class="s8-phones step" data-step="2">
       <div class="s8-phone">
         <div class="s8-phone-notch"></div>
-        <div class="s8-phone-face"></div>
+        <video src="assets/ugc-1.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         <div class="s8-phone-overlay"></div>
         <div class="s8-phone-txt">"Okay wait this actually worked..."</div>
       </div>
       <div class="s8-phone">
         <div class="s8-phone-notch"></div>
-        <div class="s8-phone-face"></div>
+        <video src="assets/ugc-2.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         <div class="s8-phone-overlay"></div>
         <div class="s8-phone-txt">"Not sponsored. Just obsessed."</div>
       </div>
       <div class="s8-phone">
         <div class="s8-phone-notch"></div>
-        <div class="s8-phone-face"></div>
+        <video src="assets/ugc-3.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         <div class="s8-phone-overlay"></div>
         <div class="s8-phone-txt">"3 weeks in and honestly..."</div>
       </div>
       <div class="s8-phone">
         <div class="s8-phone-notch"></div>
-        <div class="s8-phone-face"></div>
+        <video src="assets/ugc-4.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         <div class="s8-phone-overlay"></div>
         <div class="s8-phone-txt">"My friend told me about this"</div>
       </div>
@@ -834,7 +909,29 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 9 — THE PLATFORMS
+       SLIDE 9 — UGC WALL
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s-wall">
+    <div class="wall-label">This is what real looks like.</div>
+    <div class="wall-grid">
+      <div class="wall-phone" id="wp1">
+        <video src="assets/ugc-1.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="wall-phone" id="wp2">
+        <video src="assets/ugc-2.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="wall-phone" id="wp3">
+        <video src="assets/ugc-3.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <div class="wall-phone" id="wp4">
+        <video src="assets/ugc-5.mp4" autoplay muted loop playsinline></video>
+      </div>
+    </div>
+    <div class="wall-caption step" data-step="1">Not one perfect face. <em>Four real people. Four different stories.</em> That is what your audience trusts.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 10 — THE PLATFORMS
   ══════════════════════════════════════════ -->
   <div class="slide" id="s9">
     <!-- TikTok -->
@@ -1200,7 +1297,16 @@
 
   /* ── On-enter hooks ───────────────────────────────────────── */
   function onEnter(idx) {
-    if (idx === 13) spawnParticles(); // Slide 14 logo reveal
+    // Slide 9 — UGC wall: cascade phone reveals
+    if (idx === 8) {
+      ['wp1','wp2','wp3','wp4'].forEach((id, i) => {
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('vis');
+        }, 250 + i * 180);
+      });
+    }
+    if (idx === 14) spawnParticles(); // Slide 15 logo reveal (shifted +1)
   }
 
   /* ── On-step hooks ────────────────────────────────────────── */
@@ -1213,19 +1319,19 @@
         document.getElementById('microBar').style.width = '73%';
       }, 80);
     }
-    // Slide 11 — divider line
-    if (slideIdx === 10 && stepNum === 3) {
+    // Slide 12 — divider line (shifted +1 from slide 11)
+    if (slideIdx === 11 && stepNum === 3) {
       document.getElementById('pDivider').classList.add('animate');
     }
-    // Slide 13 — proof counters
-    if (slideIdx === 12 && stepNum === 1) {
+    // Slide 14 — proof counters (shifted +1 from slide 13)
+    if (slideIdx === 13 && stepNum === 1) {
       setTimeout(() => {
         countUpInt('pNum1', 50000, 4000,  1.3, '$', '');
         countUpInt('pNum2', 5000,  40000, 1.3, '', '');
       }, 200);
     }
-    // Slide 15 — light up step numbers
-    if (slideIdx === 14) {
+    // Slide 16 — light up step numbers (shifted +1 from slide 15)
+    if (slideIdx === 15) {
       ['sn2','sn3','sn4'].forEach((id, i) => {
         if (stepNum >= i + 2) {
           const el = document.getElementById(id);

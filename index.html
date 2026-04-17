@@ -157,17 +157,45 @@
     /* ============================================================
        SLIDE 2 — I SEE YOU
     ============================================================ */
-    #s2 { align-items: flex-start; padding-left: 10vw; gap: 0; }
+    #s2 { align-items: flex-start; justify-content: center; padding: 5vh 8vw; gap: 2.4vh; }
 
-    .s2-line {
-      font-size: clamp(20px, 2.6vw, 50px);
-      font-weight: 600; line-height: 1.25;
-      color: var(--white); max-width: 72vw;
-      margin-bottom: 2.8vh;
+    .s2-headline {
+      font-size: clamp(18px,2.1vw,38px); font-weight:700;
+      color:var(--white); max-width:80vw; line-height:1.3;
     }
-    .s2-line.dim   { color: var(--muted); font-size: clamp(16px,2vw,38px); }
-    .s2-line.punch { color: var(--lime); font-weight: 800; }
-    .s2-line strong { color: var(--white); }
+    .s2-headline strong { color:var(--white); }
+
+    .s2-cards { display:flex; gap:1.4vw; width:100%; max-width:1160px; }
+    .s2-card {
+      flex:1; padding:2.2vh 1.8vw;
+      background:var(--dark); border:1px solid var(--border);
+      border-radius:14px; display:flex; flex-direction:column; gap:1vh;
+    }
+    .s2-card-num {
+      font-size:clamp(9px,.8vw,13px); font-weight:800;
+      color:var(--lime); letter-spacing:.15em; text-transform:uppercase;
+    }
+    .s2-card-txt {
+      font-size:clamp(13px,1.35vw,23px); font-weight:600;
+      color:var(--white); line-height:1.35;
+    }
+
+    .s2-narrative { display:flex; flex-direction:column; gap:.6vh; max-width:880px; }
+    .s2-told { font-size:clamp(13px,1.35vw,22px); color:var(--muted); font-weight:500; }
+    .s2-quote {
+      font-size:clamp(28px,3.8vw,66px); font-weight:900;
+      color:var(--lime); letter-spacing:-0.04em; line-height:1.0;
+    }
+    .s2-did { font-size:clamp(13px,1.35vw,22px); color:var(--muted); font-weight:500; }
+
+    .s2-conclusion { display:flex; flex-direction:column; gap:.3vh; max-width:900px; }
+    .s2-concl-body {
+      font-size:clamp(17px,2vw,36px); font-weight:700; color:var(--white);
+    }
+    .s2-punch {
+      font-size:clamp(20px,2.5vw,46px); font-weight:900;
+      color:var(--lime); letter-spacing:-0.03em;
+    }
 
     /* ============================================================
        SLIDE 3 — AI SLOP
@@ -804,11 +832,34 @@
        SLIDE 3 — I SEE YOU
   ══════════════════════════════════════════ -->
   <div class="slide" id="s2">
-    <div class="s2-line step" data-step="1">You are in one of the <strong>most stressful jobs</strong> on the planet right now.</div>
-    <div class="s2-line dim step" data-step="2">CEO asking why the numbers are flat. Team half the size. Competitor went viral. No idea how.</div>
-    <div class="s2-line dim step" data-step="3" style="font-size:clamp(17px,2vw,36px);">17 AI tools.&nbsp; 17 browser tabs.</div>
-    <div class="s2-line step" data-step="4">And somewhere last year, someone told you: <strong style="color:var(--lime);">"Just use AI."</strong> So you did. And now you have <strong>more content than ever.</strong></div>
-    <div class="s2-line punch step" data-step="5">And somehow it feels like less.</div>
+    <div class="s2-headline step" data-step="1">You are in one of the <strong>most stressful jobs</strong> on the planet right now.</div>
+    <div class="s2-cards">
+      <div class="s2-card step" data-step="2">
+        <div class="s2-card-num">01</div>
+        <div class="s2-card-txt">CEO asking why the numbers are flat.</div>
+      </div>
+      <div class="s2-card step" data-step="3">
+        <div class="s2-card-num">02</div>
+        <div class="s2-card-txt">Team half the size it was last year.</div>
+      </div>
+      <div class="s2-card step" data-step="4">
+        <div class="s2-card-num">03</div>
+        <div class="s2-card-txt">17 AI tools. 17 browser tabs.</div>
+      </div>
+      <div class="s2-card step" data-step="5">
+        <div class="s2-card-num">04</div>
+        <div class="s2-card-txt">Competitor went viral. No idea how.</div>
+      </div>
+    </div>
+    <div class="s2-narrative step" data-step="6">
+      <div class="s2-told">And somewhere last year, someone told you:</div>
+      <div class="s2-quote">"Just use AI."</div>
+      <div class="s2-did">So you did.</div>
+    </div>
+    <div class="s2-conclusion step" data-step="7">
+      <div class="s2-concl-body">And now you have <strong>more content than ever.</strong></div>
+      <div class="s2-punch">And somehow it feels like less.</div>
+    </div>
   </div>
 
   <!-- ══════════════════════════════════════════

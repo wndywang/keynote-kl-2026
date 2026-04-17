@@ -364,7 +364,7 @@
       pointer-events:none;
     }
     .s8-phone {
-      width: clamp(72px,6.5vw,112px);
+      width: clamp(108px,10vw,175px);
       aspect-ratio:9/19.5;
       border-radius:22px; border:4px solid #333;
       overflow:hidden; position:relative;
@@ -703,6 +703,15 @@
     .s3-vis-stat p { font-size:clamp(7px,.68vw,11px); color:rgba(255,255,255,.65); line-height:1.5; font-weight:500; margin:0; }
 
     /* ============================================================
+       SLIDE 12 — STORY (photo)
+    ============================================================ */
+    .s12-photo {
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:center top;
+      z-index:1; border-radius:24px;
+    }
+
+    /* ============================================================
        UGC WALL SLIDE
     ============================================================ */
     #s-wall { background:#000; flex-direction:column; gap:0; padding:3.5vh 5vw 3vh; }
@@ -755,7 +764,44 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 2 — I SEE YOU
+       SLIDE 2 — WHO I AM
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s12">
+    <div class="s12-left">
+      <div class="s12-cred step" data-step="1">Hi. I'm Wendy.</div>
+      <div class="s12-pain step" data-step="2">
+        14 years running influencer and content campaigns.<br>
+        Unilever. L'Oréal. BMW. AI startups.<br>
+        APAC, EMEA, and the US.<br><br>
+        I am not a consultant here to sell you a framework.<br>
+        I built the system I <em>wished existed</em><br>
+        when I was sitting exactly where you are.
+      </div>
+      <div class="s12-moment step" data-step="3">I was not just a marketer.<br>I was a marketer in pain.</div>
+    </div>
+    <div class="s12-right step" data-step="1">
+      <div class="s12-card">
+        <div class="s12-card-bg"></div>
+        <!--
+          ══ ADD WENDY'S PHOTO ══════════════════════════
+          Save your portrait as:
+            Projects/keynote-kl-2026/assets/wendy-photo.jpeg
+          The photo will auto-appear. Logo shows as fallback.
+          ════════════════════════════════════════════════
+        -->
+        <img src="assets/wendy-photo.jpeg" alt="Wendy Wang" class="s12-photo"
+             onload="this.nextElementSibling.style.display='none'">
+        <img src="https://getugc.io/brand/Logo_full.svg" alt="GetUGC.io" class="s12-logo">
+        <div class="s12-bottom">
+          <div class="s12-name">Wendy Wang</div>
+          <div class="s12-title">Co-Founder, GetUGC.io</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 3 — I SEE YOU
   ══════════════════════════════════════════ -->
   <div class="slide" id="s2">
     <div class="s2-line step" data-step="1">You are in one of the <strong>most stressful jobs</strong> on the planet right now.</div>
@@ -915,16 +961,16 @@
     <div class="wall-label">This is what real looks like.</div>
     <div class="wall-grid">
       <div class="wall-phone" id="wp1">
-        <video src="assets/ugc-1.mp4" autoplay muted loop playsinline></video>
+        <video src="assets/ugc-talk.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="wall-phone" id="wp2">
-        <video src="assets/ugc-2.mp4" autoplay muted loop playsinline></video>
+        <video src="assets/ugc-5.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="wall-phone" id="wp3">
-        <video src="assets/ugc-3.mp4" autoplay muted loop playsinline></video>
+        <video src="assets/ugc-6.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="wall-phone" id="wp4">
-        <video src="assets/ugc-5.mp4" autoplay muted loop playsinline></video>
+        <video src="assets/ugc-7.mp4" autoplay muted loop playsinline></video>
       </div>
     </div>
     <div class="wall-caption step" data-step="1">Not one perfect face. <em>Four real people. Four different stories.</em> That is what your audience trusts.</div>
@@ -978,9 +1024,9 @@
       <!-- Creative AI -->
       <div class="s10-phone-wrap s10-creative step" data-step="1">
         <div class="s10-frame">
-          <div class="s10-face"></div>
-          <div class="s10-badge">Creative AI</div>
-          <div class="s10-bottom">Bold campaign.<br>Obviously AI.<br>Audience in on it.</div>
+          <video src="assets/ugc-3.mp4" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+          <div class="s10-badge">Real Creator</div>
+          <div class="s10-bottom">Real person.<br>Real voice.<br>Real trust.</div>
         </div>
         <div class="s10-lbl" style="color:var(--purple);">Creative Expression</div>
         <div class="s10-desc">AI amplifies your brand personality. Audience knows it. Trust stays.</div>
@@ -1033,30 +1079,6 @@
       </div>
     </div>
     <div class="p-kicker step" data-step="3">These are not competing choices. They are two halves of a system.</div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       SLIDE 12 — THE STORY
-  ══════════════════════════════════════════ -->
-  <div class="slide" id="s12">
-    <div class="s12-left">
-      <div class="s12-cred step" data-step="1">14 years.<br>Unilever. L'Oréal.<br>BMW. AI startups.</div>
-      <div class="s12-pain step" data-step="2">
-        I know the <em>3pm Friday panic</em> when your campaign launches Monday and the creator just ghosted you.<br><br>
-        I know the joy of finding a creator who converts — then watching them raise their rate by <em>400%</em> the moment they realize you need them.
-      </div>
-      <div class="s12-moment step" data-step="3">I was not just a marketer.<br>I was a marketer in pain.</div>
-    </div>
-    <div class="s12-right step" data-step="1">
-      <div class="s12-card">
-        <div class="s12-card-bg"></div>
-        <img src="https://getugc.io/brand/Logo_full.svg" alt="GetUGC.io" class="s12-logo">
-        <div class="s12-bottom">
-          <div class="s12-name">Wendy Wang</div>
-          <div class="s12-title">Co-Founder, GetUGC.io</div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -1298,7 +1320,7 @@
   /* ── On-enter hooks ───────────────────────────────────────── */
   function onEnter(idx) {
     // Slide 9 — UGC wall: cascade phone reveals
-    if (idx === 8) {
+    if (idx === 9) { // UGC wall (shifted +1: story now at idx 1)
       ['wp1','wp2','wp3','wp4'].forEach((id, i) => {
         setTimeout(() => {
           const el = document.getElementById(id);
@@ -1306,31 +1328,31 @@
         }, 250 + i * 180);
       });
     }
-    if (idx === 14) spawnParticles(); // Slide 15 logo reveal (shifted +1)
+    if (idx === 14) spawnParticles(); // Slide 15 logo reveal (unchanged)
   }
 
   /* ── On-step hooks ────────────────────────────────────────── */
   function onStep(slideIdx, stepNum) {
-    // Slide 7 — market number & bars
-    if (slideIdx === 6 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
-    if (slideIdx === 6 && stepNum === 2) {
+    // Slide 8 — market number & bars (shifted +1: story now at idx 1)
+    if (slideIdx === 7 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
+    if (slideIdx === 7 && stepNum === 2) {
       setTimeout(() => {
         document.getElementById('macroBar').style.width = '17%';
         document.getElementById('microBar').style.width = '73%';
       }, 80);
     }
-    // Slide 12 — divider line (shifted +1 from slide 11)
-    if (slideIdx === 11 && stepNum === 3) {
+    // Slide 13 — divider line (shifted +1)
+    if (slideIdx === 12 && stepNum === 3) {
       document.getElementById('pDivider').classList.add('animate');
     }
-    // Slide 14 — proof counters (shifted +1 from slide 13)
+    // Slide 14 — proof counters (unchanged)
     if (slideIdx === 13 && stepNum === 1) {
       setTimeout(() => {
         countUpInt('pNum1', 50000, 4000,  1.3, '$', '');
         countUpInt('pNum2', 5000,  40000, 1.3, '', '');
       }, 200);
     }
-    // Slide 16 — light up step numbers (shifted +1 from slide 15)
+    // Slide 16 — light up step numbers (unchanged)
     if (slideIdx === 15) {
       ['sn2','sn3','sn4'].forEach((id, i) => {
         if (stepNum >= i + 2) {

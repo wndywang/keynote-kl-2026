@@ -367,38 +367,72 @@
     .bh-stat-num  { font-size:clamp(32px,4vw,68px); font-weight:900; color:var(--lime); letter-spacing:-0.04em; line-height:1; flex-shrink:0; }
     .bh-stat-lbl  { font-size:clamp(10px,.9vw,14px); color:var(--muted); font-weight:500; line-height:1.45; }
 
-    /* Comment bubbles */
+    /* TikTok-style comment bubbles */
     .bc-bubble {
-      background:#141414; border:1px solid #252525; border-radius:14px;
-      padding:1.4vh 1.5vw; display:flex; flex-direction:column; gap:.5vh;
+      background:#161616; border-radius:10px;
+      padding:1.2vh 1.4vw; display:flex; gap:.9vw; align-items:flex-start;
     }
     .bc-bubble.step { transform: translateY(24px) scale(0.94); }
-    .bc-name  { font-size:clamp(8px,.72vw,11px); font-weight:700; color:var(--white); }
-    .bc-text  { font-size:clamp(10px,.95vw,15px); color:rgba(255,255,255,.8); line-height:1.45; font-style:italic; }
-    .bc-likes { font-size:clamp(7px,.62vw,10px); color:var(--muted); margin-top:.2vh; }
+    .bc-avatar {
+      width:clamp(22px,2.2vw,36px); height:clamp(22px,2.2vw,36px);
+      border-radius:50%; flex-shrink:0; background:var(--border);
+      overflow:hidden; display:flex; align-items:center; justify-content:center;
+      font-size:clamp(9px,.85vw,14px); font-weight:700; color:var(--white);
+    }
+    .bc-body { flex:1; display:flex; flex-direction:column; gap:.3vh; }
+    .bc-row1 { display:flex; align-items:center; gap:.6vw; }
+    .bc-name  { font-size:clamp(8px,.75vw,12px); font-weight:700; color:var(--white); }
+    .bc-time  { font-size:clamp(7px,.62vw,10px); color:var(--muted); }
+    .bc-text  { font-size:clamp(10px,.95vw,15px); color:rgba(255,255,255,.85); line-height:1.45; }
+    .bc-actions { display:flex; align-items:center; gap:1.2vw; margin-top:.3vh; }
+    .bc-heart { display:flex; align-items:center; gap:.3vw; font-size:clamp(7px,.65vw,10px); color:var(--muted); }
+    .bc-heart svg { width:clamp(9px,.85vw,13px); fill:none; stroke:currentColor; stroke-width:2; }
+    .bc-heart.liked svg { fill:var(--red); stroke:var(--red); color:var(--red); }
+    .bc-reply-lbl { font-size:clamp(7px,.65vw,10px); color:var(--muted); font-weight:600; }
+    /* Reply indent */
+    .bc-reply {
+      margin-left:clamp(28px,3vw,48px); background:#1e1e1e; border-radius:8px;
+      padding:.8vh 1.2vw; display:flex; gap:.7vw; align-items:flex-start;
+    }
+    .bc-reply .bc-avatar { width:clamp(18px,1.7vw,28px); height:clamp(18px,1.7vw,28px); font-size:clamp(7px,.68vw,11px); }
+    .bc-creator-badge { font-size:clamp(6px,.55vw,8px); font-weight:800; background:var(--pink); color:#fff; padding:1px 5px; border-radius:3px; letter-spacing:.06em; }
 
-    /* TikTok phone */
-    .bl-tt { display:flex; flex-direction:column; align-items:center; gap:1vh; margin-top:.5vh; }
-    .tt-wrap {
-      width:clamp(90px,9.5vw,160px); aspect-ratio:9/16;
-      border-radius:18px; overflow:hidden; position:relative;
-      border:2px solid #333; background:#0a0a0a; cursor:pointer; flex-shrink:0;
+    /* Video overlay — fullscreen modal */
+    .news-overlay {
+      display:none; position:fixed; inset:0; z-index:999;
+      background:rgba(0,0,0,.92); align-items:center; justify-content:center;
+      cursor:pointer;
     }
-    .tt-poster {
-      position:absolute; inset:0; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; gap:.8vh;
-      background:linear-gradient(160deg,#1a0a0a,#000);
-      transition:background .2s;
+    .news-overlay.open { display:flex; }
+    .news-video-wrap {
+      position:relative; width:min(90vw,160vh*9/16); max-width:90vw;
+      aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;
+      cursor:default;
     }
-    .tt-poster:hover { background:linear-gradient(160deg,#2a1010,#080808); }
-    .tt-play-ring {
-      width:clamp(28px,3.2vw,50px); height:clamp(28px,3.2vw,50px);
-      border-radius:50%; background:var(--pink);
+    .news-video-wrap video { width:100%; height:100%; object-fit:contain; display:block; }
+    .news-close {
+      position:absolute; top:-3.5vh; right:0;
+      font-size:clamp(14px,1.5vw,22px); color:rgba(255,255,255,.6);
+      cursor:pointer; font-weight:300; letter-spacing:.05em;
+    }
+
+    /* Play button on slide */
+    .bl-play-btn {
+      display:flex; align-items:center; gap:1vw;
+      background:#1a1a1a; border:1px solid #333; border-radius:10px;
+      padding:1.4vh 1.8vw; cursor:pointer; transition:background .2s;
+      width:100%;
+    }
+    .bl-play-btn:hover { background:#222; }
+    .bl-play-icon {
+      width:clamp(28px,3vw,46px); height:clamp(28px,3vw,46px);
+      border-radius:50%; background:var(--pink); flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
     }
-    .tt-play-ring svg { width:40%; fill:#fff; margin-left:10%; }
-    .tt-lbl { font-size:clamp(6px,.58vw,9px); color:rgba(255,255,255,.6); font-weight:600; letter-spacing:.07em; text-align:center; }
-    .tt-caption { font-size:clamp(7px,.62vw,9px); color:var(--muted); text-align:center; max-width:clamp(90px,9.5vw,160px); line-height:1.4; }
+    .bl-play-icon svg { width:38%; fill:#fff; margin-left:10%; }
+    .bl-play-text { display:flex; flex-direction:column; gap:.2vh; }
+    .bl-play-title { font-size:clamp(10px,.95vw,15px); font-weight:700; color:var(--white); }
+    .bl-play-sub   { font-size:clamp(7px,.65vw,10px); color:var(--muted); }
 
     /* ============================================================
        SLIDE 7 — THE MARKET
@@ -1045,30 +1079,68 @@
         </div>
       </div>
       <div class="bl-right">
+        <!-- Comment 1 -->
         <div class="bc-bubble step" data-step="5">
-          <div class="bc-name">Stacey Knight</div>
-          <div class="bc-text">"Yuck, I'd never buy anything off an AI influencer. If I can't feel authenticity or a connection with the creator I watch, I'm not the slightest bit interested."</div>
-        </div>
-        <div class="bc-bubble step" data-step="5">
-          <div class="bc-name">Your.Crystal.Vision</div>
-          <div class="bc-text">"AI-generated ads are false advertisement and should be handled that way."</div>
-          <div class="bc-likes">1,649 likes &middot; Aug 2025</div>
-        </div>
-        <div class="bc-bubble step" data-step="5">
-          <div class="bc-name">Sandy David</div>
-          <div class="bc-text">"Damn scary. I'm worried for my children — equally challenging for those of us going against unrealistic beauty standards to keep showing up."</div>
-          <div class="bc-likes">@whatbellathinks (Creator): "Yes!!! 100% agree"</div>
-        </div>
-        <div class="bl-tt step" data-step="6">
-          <div class="tt-wrap" id="ttPhone" onclick="loadTT(this)">
-            <div class="tt-poster" id="ttPoster">
-              <div class="tt-play-ring">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-              <div class="tt-lbl">Watch the<br>audience react</div>
+          <div class="bc-avatar" style="background:linear-gradient(135deg,#8a6a5a,#6a4a3a);">SK</div>
+          <div class="bc-body">
+            <div class="bc-row1">
+              <span class="bc-name">Stacey knight</span>
+              <span class="bc-time">3d ago</span>
+            </div>
+            <div class="bc-text">Yuck, I'd never buy anything off an AI influencer. If I can't feel authenticity or a "connection" with the creator I watch I'm not the slightest bit interested'</div>
+            <div class="bc-actions">
+              <span class="bc-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Reply</span>
             </div>
           </div>
-          <div class="tt-caption">ABC News &middot; public reaction to AI influencers</div>
+        </div>
+        <!-- Comment 2 -->
+        <div class="bc-bubble step" data-step="5">
+          <div class="bc-avatar" style="background:linear-gradient(135deg,#4a5a8a,#2a3a6a);">YC</div>
+          <div class="bc-body">
+            <div class="bc-row1">
+              <span class="bc-name">Your.Crystal.Vision</span>
+              <span class="bc-time">2025-8-29</span>
+            </div>
+            <div class="bc-text">AI-generated ads are false advertisement and should be handled that way</div>
+            <div class="bc-actions">
+              <span class="bc-heart liked"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>1,649</span>
+              <span class="bc-reply-lbl">Reply</span>
+            </div>
+          </div>
+        </div>
+        <!-- Comment 3 with reply -->
+        <div class="bc-bubble step" data-step="5">
+          <div class="bc-avatar" style="background:linear-gradient(135deg,#3a3a3a,#1a1a1a);">SD</div>
+          <div class="bc-body">
+            <div class="bc-row1">
+              <span class="bc-name">Sandy David</span>
+              <span class="bc-time">2025-10-13</span>
+            </div>
+            <div class="bc-text">Damn scary!!! I'm worried for my children but equally challenging for us who are already going against unrealistic beauty standards- to keep on showing up to show people that it's okay to not look perfect!</div>
+            <div class="bc-actions">
+              <span class="bc-heart"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>29</span>
+              <span class="bc-reply-lbl">Reply</span>
+            </div>
+          </div>
+        </div>
+        <div class="bc-reply step" data-step="5">
+          <div class="bc-avatar" style="background:linear-gradient(135deg,#aa6688,#884466);">WB</div>
+          <div class="bc-body">
+            <div class="bc-row1">
+              <span class="bc-name">IG: @whatbellathinks</span>
+              <span class="bc-creator-badge">Creator</span>
+              <span class="bc-time">2025-10-13</span>
+            </div>
+            <div class="bc-text">Yes!!! 100% agree</div>
+          </div>
+        </div>
+        <!-- Video play button -->
+        <div class="bl-play-btn step" data-step="6" onclick="openNewsVideo()">
+          <div class="bl-play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="bl-play-text">
+            <div class="bl-play-title">Watch: Public reaction to AI influencers</div>
+            <div class="bl-play-sub">ABC News &middot; Click to play with sound</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1449,6 +1521,14 @@
 
 </div><!-- /deck -->
 
+<!-- News video fullscreen overlay -->
+<div class="news-overlay" id="newsOverlay" onclick="closeNewsVideo(event)">
+  <div class="news-video-wrap" onclick="event.stopPropagation()">
+    <div class="news-close" onclick="closeNewsVideo()">Close &times;</div>
+    <video id="newsVid" src="assets/News-video.mp4" controls playsinline style="width:100%;height:100%;object-fit:contain;"></video>
+  </div>
+</div>
+
 <!-- ============================================================
      JAVASCRIPT — NAVIGATION ENGINE
 ============================================================ -->
@@ -1509,15 +1589,23 @@
   }
 
   /* ── On-enter hooks ───────────────────────────────────────── */
-  function loadTT(el) {
-    const poster = el.querySelector('.tt-poster');
-    if (poster) poster.remove();
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.tiktok.com/embed/v2/7543977283942403341?autoplay=1';
-    iframe.allow = 'autoplay; encrypted-media; fullscreen';
-    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
-    el.appendChild(iframe);
+  function openNewsVideo() {
+    const overlay = document.getElementById('newsOverlay');
+    const vid = document.getElementById('newsVid');
+    overlay.classList.add('open');
+    vid.currentTime = 0;
+    vid.play();
   }
+  function closeNewsVideo(e) {
+    if (e && e.target !== document.getElementById('newsOverlay') && !e.target.classList.contains('news-close')) return;
+    const overlay = document.getElementById('newsOverlay');
+    const vid = document.getElementById('newsVid');
+    overlay.classList.remove('open');
+    vid.pause();
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeNewsVideo({ target: document.getElementById('newsOverlay') });
+  });
 
   function onEnter(idx) {
     // Slide 10 — UGC wall: cascade phone reveals

@@ -348,16 +348,22 @@
     /* Headline cards — spin-in via overriding initial step transform */
     .bh-card {
       background:var(--dark); border:1px solid #2a2a2a; border-radius:12px;
-      padding:1.6vh 1.6vw; display:flex; align-items:flex-start; gap:1vw;
+      padding:1.4vh 1.4vw; display:flex; align-items:flex-start; gap:1.2vw;
     }
     .bh-card.step { transform: translateY(28px) rotateZ(-3deg) scale(0.91); }
-    .bh-dot { width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:.45em; }
+    .bh-dot { width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:.5em; }
+    .bh-content { flex:1; min-width:0; }
     .bh-brand {
       font-size:clamp(8px,.72vw,11px); font-weight:800; color:var(--red);
       letter-spacing:.14em; text-transform:uppercase; margin-bottom:.3vh;
     }
-    .bh-headline { font-size:clamp(11px,1.1vw,18px); font-weight:700; color:var(--white); line-height:1.35; }
+    .bh-headline { font-size:clamp(11px,1.05vw,17px); font-weight:700; color:var(--white); line-height:1.35; }
     .bh-source   { font-size:clamp(7px,.62vw,9px); color:var(--muted); margin-top:.25vh; }
+    .bh-thumb {
+      flex-shrink:0; width:clamp(62px,7vw,115px); aspect-ratio:4/3;
+      border-radius:8px; overflow:hidden; border:1px solid #333;
+    }
+    .bh-thumb img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
 
     .bh-stat {
       background:rgba(204,255,0,.07); border:1px solid rgba(204,255,0,.22);
@@ -1059,23 +1065,34 @@
       <div class="bl-left">
         <div class="bh-card step" data-step="2">
           <div class="bh-dot"></div>
-          <div>
+          <div class="bh-content">
             <div class="bh-brand">Coca-Cola</div>
             <div class="bh-headline">AI Christmas ad condemned as "utterly soulless" — backlash trended globally across every platform</div>
             <div class="bh-source">Business Insider &middot; Dec 2025</div>
           </div>
+          <div class="bh-thumb"><img src="assets/AI backlash coca cola.png" alt="Coca-Cola AI backlash"></div>
         </div>
         <div class="bh-card step" data-step="3">
           <div class="bh-dot"></div>
-          <div>
-            <div class="bh-brand">McDonald's + Meta</div>
-            <div class="bh-headline">AI-generated creator content exposed as "uncanny and fake" — #AIad trending for all the wrong reasons</div>
+          <div class="bh-content">
+            <div class="bh-brand">McDonald's</div>
+            <div class="bh-headline">AI-generated creator content called "uncanny and fake" — customers publicly called for a boycott</div>
             <div class="bh-source">Business Insider &middot; Dec 2025</div>
           </div>
+          <div class="bh-thumb"><img src="assets/AI backlash Mcdonald.png" alt="McDonald's AI backlash"></div>
+        </div>
+        <div class="bh-card step" data-step="4">
+          <div class="bh-dot"></div>
+          <div class="bh-content">
+            <div class="bh-brand">True Classic</div>
+            <div class="bh-headline">AI influencer campaign exposed — audience immediately spotted it and flooded comments with distrust</div>
+            <div class="bh-source">Social media reaction &middot; 2025</div>
+          </div>
+          <div class="bh-thumb"><img src="assets/AI backlash 1.png" alt="True Classic AI backlash"></div>
         </div>
         <div class="bh-stat step" data-step="4">
           <div class="bh-stat-num">96%</div>
-          <div class="bh-stat-lbl">of major global brands now fear AI influencers will damage consumer trust<br><span style="color:var(--lime);font-weight:700;">— World Federation of Advertisers, 2025</span></div>
+          <div class="bh-stat-lbl">of major global brands fear AI influencers damage consumer trust<br><span style="color:var(--lime);font-weight:700;">— World Federation of Advertisers, 2025</span></div>
         </div>
       </div>
       <div class="bl-right">

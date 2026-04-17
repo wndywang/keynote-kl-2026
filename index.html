@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1.0">
+  <title>AI as a Brand Partner — Wendy Wang | KL 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       RESET & ROOT
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0A0A0A;
+      --dark:   #141414;
+      --d2:     #1a1a1a;
+      --border: #2A2A2A;
+      --muted:  #A0A0A0;
+      --white:  #F5F5F5;
+      --lime:   #CCFF00;
+      --pink:   #FF66AA;
+      --purple: #9966FF;
+      --red:    #FF4444;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--black);
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================================
+       DECK
+    ============================================================ */
+    .deck {
+      width: 100vw; height: 100vh;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* ============================================================
+       SLIDES
+    ============================================================ */
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 6vh 8vw;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--black);
+      overflow: hidden;
+    }
+    .slide.active { opacity: 1; pointer-events: all; }
+
+    /* ============================================================
+       STEP REVEALS
+    ============================================================ */
+    .step {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .step.visible { opacity: 1; transform: translateY(0); }
+
+    /* Stagger siblings in same step */
+    .step-group .step:nth-child(1) { transition-delay: 0s; }
+    .step-group .step:nth-child(2) { transition-delay: 0.07s; }
+    .step-group .step:nth-child(3) { transition-delay: 0.14s; }
+    .step-group .step:nth-child(4) { transition-delay: 0.21s; }
+    .step-group .step:nth-child(5) { transition-delay: 0.28s; }
+
+    /* ============================================================
+       PROGRESS + COUNTER
+    ============================================================ */
+    .progress-bar {
+      position: fixed; bottom: 0; left: 0;
+      height: 3px; background: var(--lime);
+      z-index: 200; transition: width 0.45s ease;
+    }
+    .slide-counter {
+      position: fixed; bottom: 14px; right: 20px;
+      font-size: 11px; font-weight: 600;
+      color: var(--border); z-index: 200;
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================================
+       NOISE TEXTURE LAYER
+    ============================================================ */
+    .noise-layer {
+      position: fixed; inset: 0; z-index: 150;
+      pointer-events: none; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ============================================================
+       KEYFRAMES
+    ============================================================ */
+    @keyframes slowFadeIn  { from { opacity:0 } to { opacity:1 } }
+    @keyframes cursorBlink { 0%,100% { opacity:1 } 50% { opacity:0 } }
+    @keyframes glowPulse   { 0%,100% { text-shadow:0 0 60px rgba(204,255,0,.25) } 50% { text-shadow:0 0 120px rgba(204,255,0,.6) } }
+    @keyframes logoReveal  { 0% { opacity:0; filter:blur(24px); transform:scale(1.08) } 100% { opacity:1; filter:blur(0); transform:scale(1) } }
+    @keyframes particleUp  { 0% { transform:translateY(110vh) translateX(0); opacity:0 } 8% { opacity:.9 } 92% { opacity:.9 } 100% { transform:translateY(-60px) translateX(calc(var(--d)*1px)); opacity:0 } }
+    @keyframes lineGrow    { from { width:0 } to { width:100% } }
+    @keyframes barGrow     { from { width:0 } }
+    @keyframes blastIn     { from { opacity:0; transform:scale(.65) } to { opacity:1; transform:scale(1) } }
+    @keyframes slideRight  { from { opacity:0; transform:translateX(-30px) } to { opacity:1; transform:translateX(0) } }
+    @keyframes slideLeft   { from { opacity:0; transform:translateX(30px) } to { opacity:1; transform:translateX(0) } }
+    @keyframes s6textIn    { 0% { opacity:0; transform:translateY(16px) } 100% { opacity:1; transform:translateY(0) } }
+    @keyframes divideLine  { from { transform:scaleY(0) } to { transform:scaleY(1) } }
+    @keyframes phoneWobble { 0%,100% { transform:rotate(-4deg) translateY(0) } 50% { transform:rotate(-4deg) translateY(-6px) } }
+    @keyframes phoneWobble2{ 0%,100% { transform:rotate(3deg) translateY(0) } 50% { transform:rotate(3deg) translateY(-8px) } }
+    @keyframes phoneWobble3{ 0%,100% { transform:rotate(-7deg) translateY(0) } 50% { transform:rotate(-7deg) translateY(-4px) } }
+    @keyframes phoneWobble4{ 0%,100% { transform:rotate(6deg) translateY(0) } 50% { transform:rotate(6deg) translateY(-10px) } }
+
+    /* ============================================================
+       SLIDE 1 — THE HOOK
+    ============================================================ */
+    #s1 { background: #000; }
+
+    .s1-question {
+      font-size: clamp(44px, 7.5vw, 130px);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.045em; text-align: center;
+      max-width: 16ch; color: var(--white);
+      opacity: 0;
+      animation: slowFadeIn 2s ease forwards;
+      animation-delay: 0.6s;
+    }
+    .s1-cursor {
+      display: inline-block; width: 5px;
+      height: .85em; background: var(--lime);
+      vertical-align: middle; margin-left: 6px;
+      opacity: 0;
+      animation: cursorBlink 1s step-end infinite;
+      animation-delay: 2.8s;
+    }
+    .s1-meta {
+      margin-top: 4vh;
+      font-size: clamp(11px, 1vw, 15px);
+      font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--border);
+      opacity: 0;
+      animation: slowFadeIn 1.2s ease forwards;
+      animation-delay: 2.4s;
+    }
+
+    /* ============================================================
+       SLIDE 2 — I SEE YOU
+    ============================================================ */
+    #s2 { align-items: flex-start; padding-left: 10vw; gap: 0; }
+
+    .s2-line {
+      font-size: clamp(20px, 2.6vw, 50px);
+      font-weight: 600; line-height: 1.25;
+      color: var(--white); max-width: 72vw;
+      margin-bottom: 2.8vh;
+    }
+    .s2-line.dim   { color: var(--muted); font-size: clamp(16px,2vw,38px); }
+    .s2-line.punch { color: var(--lime); font-weight: 800; }
+    .s2-line strong { color: var(--white); }
+
+    /* ============================================================
+       SLIDE 3 — AI SLOP
+    ============================================================ */
+    #s3 { justify-content: flex-start; padding-top: 5vh; }
+
+    .s3-label {
+      font-size: clamp(52px, 8.5vw, 150px);
+      font-weight: 900; letter-spacing: -0.05em;
+      color: var(--lime); line-height: 1;
+      margin-bottom: 4vh; align-self: flex-start;
+    }
+    .s3-compare {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4vw; width: 100%; max-width: 1100px;
+    }
+    .s3-phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.5vh; }
+    .s3-phone {
+      width: clamp(140px, 15vw, 220px);
+      aspect-ratio: 9/18;
+      border-radius: 28px; overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.7);
+    }
+    /* AI polished phone */
+    .s3-ai { border: 6px solid #9966FF; background: linear-gradient(135deg, #1a0a2e, #0d1b4b, #1a2a6c); }
+    .s3-ai-glow { position:absolute; inset:0; background: radial-gradient(circle at 35% 25%, rgba(153,102,255,.5) 0%, transparent 55%), radial-gradient(circle at 70% 75%, rgba(255,102,170,.35) 0%, transparent 55%); }
+    .s3-ai-face  { position:absolute; top:14%; left:50%; transform:translateX(-50%); width:42%; aspect-ratio:1; border-radius:50%; background:linear-gradient(135deg,#f5c9a0,#e0a070); box-shadow:0 0 30px rgba(255,200,150,.2); }
+    .s3-ai-shine { position:absolute; top:14%; left:50%; transform:translateX(-50%); width:42%; aspect-ratio:1; border-radius:50%; background:linear-gradient(180deg,rgba(255,255,255,.18) 0%,transparent 60%); }
+    .s3-ai-bottom { position:absolute; bottom:0; left:0; right:0; padding:14px; background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%); }
+    .s3-ai-tag    { font-size: clamp(7px,.7vw,11px); color:#fff; line-height:1.4; font-weight:500; }
+    .s3-ai-stat   { font-size: clamp(6px,.6vw,9px); color:rgba(255,255,255,.45); margin-top:4px; }
+    .s3-ai-badge  { position:absolute; top:12px; right:12px; background:rgba(153,102,255,.9); color:#fff; font-size:clamp(6px,.55vw,9px); font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.08em; text-transform:uppercase; }
+    /* UGC real phone */
+    .s3-ugc { border: 6px solid var(--lime); background: #1a1410; transform: rotate(-2.5deg); }
+    .s3-ugc-warm  { position:absolute; inset:0; background:linear-gradient(160deg,#2d1f0e,#1a1008,#3d2a18); }
+    .s3-ugc-grain { position:absolute; inset:0; opacity:.06; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"); }
+    .s3-ugc-face  { position:absolute; top:12%; left:50%; transform:translateX(-50%); width:50%; aspect-ratio:1; border-radius:50%; background:linear-gradient(160deg,#c98b5a,#7d4a35); }
+    .s3-ugc-notch { position:absolute; top:0; left:50%; transform:translateX(-50%); width:30%; height:10px; background:#000; border-radius:0 0 8px 8px; z-index:3; }
+    .s3-ugc-bottom{ position:absolute; bottom:0; left:0; right:0; padding:14px; background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%); z-index:2; }
+    .s3-ugc-text  { font-size:clamp(7px,.7vw,11px); color:#fff; line-height:1.45; font-weight:500; }
+    .s3-ugc-stat  { font-size:clamp(6px,.6vw,9px); color:rgba(255,255,255,.5); margin-top:4px; }
+    .s3-ugc-badge { position:absolute; top:12px; right:12px; background:var(--lime); color:#000; font-size:clamp(6px,.55vw,9px); font-weight:800; padding:3px 8px; border-radius:20px; letter-spacing:.08em; text-transform:uppercase; z-index:3; }
+
+    .s3-card-label { font-size:clamp(10px,.9vw,15px); font-weight:700; letter-spacing:.15em; text-transform:uppercase; text-align:center; }
+
+    /* ============================================================
+       SLIDE 4 — EVOLUTION
+    ============================================================ */
+    #s4 { gap: 0; }
+
+    .s4-row { display:flex; align-items:center; gap:2.5vw; flex-wrap:wrap; justify-content:center; }
+    .s4-word {
+      font-size: clamp(40px,7vw,120px);
+      font-weight: 900; letter-spacing: -0.045em;
+      line-height: 1;
+    }
+    .s4-word.dim    { color: var(--border); }
+    .s4-word.active { color: var(--lime); }
+    .s4-arrow {
+      font-size: clamp(28px,4vw,70px);
+      font-weight: 200; color: var(--border);
+      transition: color .4s ease;
+    }
+    .s4-arrow.active { color: var(--lime); }
+    .s4-caption {
+      margin-top: 5vh;
+      font-size: clamp(16px,1.8vw,30px);
+      font-weight: 500; color: var(--muted);
+      text-align: center; max-width: 60vw;
+    }
+    .s4-caption strong { color: var(--white); }
+    .s4-caption em { font-style:normal; color: var(--lime); }
+
+    /* ============================================================
+       SLIDE 5 — WHERE AI WINS
+    ============================================================ */
+    #s5 { align-items: flex-start; padding-left: 10vw; justify-content: center; gap: 0; }
+
+    .s5-word {
+      font-size: clamp(60px,10.5vw,190px);
+      font-weight: 900; letter-spacing: -0.055em;
+      line-height: .9; color: var(--white);
+    }
+    .s5-word.lit { color: var(--lime); }
+    .s5-caption {
+      margin-top: 4.5vh;
+      font-size: clamp(16px,1.7vw,28px);
+      color: var(--muted); font-weight: 500;
+      max-width: 55vw; line-height: 1.5;
+    }
+    .s5-stop {
+      margin-top: 3vh;
+      font-size: clamp(28px,4vw,70px);
+      font-weight: 900; color: var(--pink);
+      letter-spacing: -0.035em;
+    }
+
+    /* ============================================================
+       SLIDE 6 — WHAT AI CANNOT DO
+    ============================================================ */
+    #s6 { background: #000; }
+
+    .s6-text {
+      font-size: clamp(32px,5.2vw,94px);
+      font-weight: 800; line-height: 1.1;
+      text-align: center; max-width: 16ch;
+      opacity: 0;
+      animation: s6textIn 1.8s cubic-bezier(0.16,1,0.3,1) forwards;
+      animation-delay: .3s;
+    }
+    .s6-lime {
+      color: var(--lime);
+      animation: glowPulse 2.5s ease-in-out 2.2s infinite;
+    }
+    .s6-sub {
+      margin-top: 3.5vh;
+      font-size: clamp(14px,1.5vw,24px);
+      color: var(--muted); text-align: center;
+      font-weight: 500; max-width: 55ch;
+      opacity: 0;
+      animation: slowFadeIn 1s ease forwards;
+      animation-delay: 2.2s;
+    }
+
+    /* ============================================================
+       SLIDE 7 — THE MARKET
+    ============================================================ */
+    #s7 { gap: 3vh; }
+
+    .s7-number {
+      font-size: clamp(56px,10vw,170px);
+      font-weight: 900; letter-spacing: -0.055em;
+      color: var(--lime); line-height: 1;
+    }
+    .s7-label {
+      font-size: clamp(11px,1vw,16px);
+      color: var(--muted); font-weight: 500;
+      letter-spacing: .08em; margin-top: .5vh;
+      text-align: center;
+    }
+    .s7-bars { width: 78vw; max-width: 920px; }
+    .s7-bar-row { display:flex; align-items:center; gap:1.5vw; margin-bottom:2.5vh; }
+    .s7-bar-lbl {
+      font-size: clamp(11px,.95vw,15px);
+      color: var(--muted); font-weight:500;
+      width: 38%; text-align:right; flex-shrink:0;
+      line-height: 1.3;
+    }
+    .s7-bar-track {
+      flex:1; height: clamp(26px,3.2vh,50px);
+      background: var(--dark); border-radius:8px;
+      overflow:hidden;
+    }
+    .s7-bar-fill {
+      height:100%; border-radius:8px; width:0;
+      transition: width 1.3s cubic-bezier(0.16,1,0.3,1);
+      display:flex; align-items:center;
+      padding-right:14px; justify-content:flex-end;
+    }
+    .s7-bar-fill.macro { background: var(--border); }
+    .s7-bar-fill.micro { background: var(--lime); }
+    .s7-bar-val { font-size:clamp(11px,1.1vw,17px); font-weight:800; }
+    .s7-bar-val.dark { color:#000; }
+    .s7-bar-val.light { color: var(--muted); }
+    .s7-kicker {
+      font-size: clamp(16px,1.8vw,30px);
+      font-weight: 700; color: var(--white);
+      text-align: center;
+    }
+    .s7-kicker em { font-style:normal; color: var(--lime); }
+
+    /* ============================================================
+       SLIDE 8 — THE BIG IDEA
+    ============================================================ */
+    #s8 { background:#000; align-items:flex-start; padding-left:9vw; padding-right:9vw; justify-content:center; }
+
+    .s8-line1 {
+      font-size: clamp(34px,5.5vw,96px);
+      font-weight: 800; letter-spacing: -0.045em;
+      line-height: 1.05; color: var(--muted);
+    }
+    .s8-line2 {
+      font-size: clamp(34px,5.5vw,96px);
+      font-weight: 900; letter-spacing: -0.045em;
+      line-height: 1.05; color: var(--lime);
+      margin-top: 2.5vh;
+      text-shadow: 0 0 80px rgba(204,255,0,.35);
+    }
+    /* Phone frames bottom-right */
+    .s8-phones {
+      position:absolute; bottom:0; right:4vw;
+      display:flex; gap:1.2vw; align-items:flex-end;
+      pointer-events:none;
+    }
+    .s8-phone {
+      width: clamp(72px,6.5vw,112px);
+      aspect-ratio:9/19.5;
+      border-radius:22px; border:4px solid #333;
+      overflow:hidden; position:relative;
+    }
+    .s8-phone:nth-child(1){ background:linear-gradient(160deg,#2a1a0e,#1a0e06); animation:phoneWobble  4s ease-in-out infinite; animation-delay:0s; }
+    .s8-phone:nth-child(2){ background:linear-gradient(160deg,#0e1a2a,#0a1520); animation:phoneWobble2 5s ease-in-out infinite; animation-delay:.5s; }
+    .s8-phone:nth-child(3){ background:linear-gradient(160deg,#1a0e2a,#120a20); animation:phoneWobble3 4.5s ease-in-out infinite; animation-delay:1s; }
+    .s8-phone:nth-child(4){ background:linear-gradient(160deg,#1a1a0e,#121208); animation:phoneWobble4 5.5s ease-in-out infinite; animation-delay:1.5s; }
+    .s8-phone-face {
+      position:absolute; top:12%; left:50%; transform:translateX(-50%);
+      width:52%; aspect-ratio:1; border-radius:50%;
+    }
+    .s8-phone:nth-child(1) .s8-phone-face { background:linear-gradient(160deg,#c98b5a,#7d4a35); }
+    .s8-phone:nth-child(2) .s8-phone-face { background:linear-gradient(160deg,#8a6a50,#604535); }
+    .s8-phone:nth-child(3) .s8-phone-face { background:linear-gradient(160deg,#e0b080,#a07050); }
+    .s8-phone:nth-child(4) .s8-phone-face { background:linear-gradient(160deg,#b08060,#7a5040); }
+    .s8-phone-notch { position:absolute; top:0; left:50%; transform:translateX(-50%); width:28%; height:9px; background:#000; border-radius:0 0 7px 7px; z-index:2; }
+    .s8-phone-overlay { position:absolute; bottom:0; left:0; right:0; height:40%; background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 100%); z-index:2; }
+    .s8-phone-txt { position:absolute; bottom:10px; left:6px; right:6px; font-size:5.5px; color:rgba(255,255,255,.8); font-weight:600; line-height:1.35; z-index:3; }
+
+    /* ============================================================
+       SLIDE 9 — PLATFORMS
+    ============================================================ */
+    #s9 { align-items:flex-start; padding-left:8vw; gap:2.5vh; }
+
+    .s9-card {
+      background: var(--dark); border:1px solid var(--border);
+      border-radius:16px; padding:2.2vh 2.5vw;
+      max-width:82vw; display:flex;
+      align-items:center; gap:2vw; width:100%;
+    }
+    .s9-icon {
+      width: clamp(36px,3.8vw,58px);
+      height: clamp(36px,3.8vw,58px);
+      border-radius:14px; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .s9-icon.tt  { background:#000; border:1px solid #333; }
+    .s9-icon.fb  { background:#1877F2; }
+    .s9-icon.yt  { background:#FF0000; }
+    .s9-stat {
+      font-size: clamp(15px,1.9vw,34px);
+      font-weight: 700; line-height: 1.25;
+    }
+    .s9-stat strong { color: var(--lime); }
+    .s9-sub {
+      font-size: clamp(10px,.9vw,14px);
+      color: var(--muted); margin-top:3px;
+    }
+    .s9-footer {
+      font-size: clamp(16px,2vw,34px);
+      font-weight: 700; color: var(--white);
+      max-width: 75vw; line-height: 1.3;
+    }
+    .s9-footer em { font-style:normal; color: var(--pink); }
+
+    /* ============================================================
+       SLIDE 10 — THE LINE
+    ============================================================ */
+    #s10 { gap: 3vh; }
+
+    .s10-title {
+      font-size: clamp(18px,2.2vw,38px);
+      font-weight: 700; color: var(--muted);
+      text-align:center; letter-spacing:-0.02em;
+    }
+    .s10-phones { display:flex; gap:7vw; align-items:flex-end; justify-content:center; }
+    .s10-phone-wrap { display:flex; flex-direction:column; align-items:center; gap:1.5vh; }
+    .s10-frame {
+      width: clamp(120px,10.5vw,185px);
+      aspect-ratio: 9/19.5; border-radius:28px;
+      overflow:hidden; position:relative;
+      border:5px solid;
+    }
+    .s10-creative .s10-frame { border-color:var(--purple); background:linear-gradient(135deg,#1a0a2e,#0d1b4b,#1a2a6c); box-shadow:0 0 35px rgba(153,102,255,.25); }
+    .s10-fake    .s10-frame { border-color:var(--red); background:linear-gradient(160deg,#2a1a10,#1a1208); box-shadow:0 0 35px rgba(255,68,68,.3); }
+    .s10-face { position:absolute; top:13%; left:50%; transform:translateX(-50%); width:46%; aspect-ratio:1; border-radius:50%; }
+    .s10-creative .s10-face { background:linear-gradient(135deg,#f5c9a0,#e8a97e); }
+    .s10-fake    .s10-face { background:linear-gradient(160deg,#d4a57a,#c0876a); }
+    .s10-badge { position:absolute; top:10px; right:10px; color:#fff; font-size:clamp(5.5px,.55vw,8.5px); font-weight:800; padding:3px 8px; border-radius:20px; letter-spacing:.07em; text-transform:uppercase; }
+    .s10-creative .s10-badge { background:var(--purple); }
+    .s10-fake    .s10-badge { background:var(--red); }
+    .s10-bottom { position:absolute; bottom:0; left:0; right:0; padding:10px 10px 14px; background:linear-gradient(to top,rgba(0,0,0,.88) 0%,transparent 100%); font-size:6.5px; color:#fff; line-height:1.4; font-weight:500; }
+    .s10-x { position:absolute; inset:0; background:rgba(255,68,68,.22); display:flex; align-items:center; justify-content:center; font-size:clamp(50px,5.5vw,90px); color:var(--red); font-weight:900; z-index:5; }
+    .s10-lbl { font-size:clamp(10px,.95vw,16px); font-weight:700; letter-spacing:.12em; text-transform:uppercase; text-align:center; }
+    .s10-desc { font-size:clamp(9px,.78vw,12px); color:var(--muted); text-align:center; max-width:190px; line-height:1.45; }
+
+    /* ============================================================
+       SLIDE 11 — THE PARTITION (POWER SLIDE)
+    ============================================================ */
+    #s11 { padding:0; }
+
+    .partition { display:grid; grid-template-columns:1fr 1fr; width:100%; height:100%; position:relative; }
+    .p-divider {
+      position:absolute; top:0; bottom:0; left:50%;
+      width:3px; background:var(--lime);
+      transform-origin:top; animation:divideLine .8s cubic-bezier(0.16,1,0.3,1) forwards;
+      animation-play-state:paused;
+    }
+    .p-divider.animate { animation-play-state:running; }
+
+    .p-ai    { background:var(--black); display:flex; flex-direction:column; justify-content:center; padding:8vh 5.5vw 8vh 8vw; }
+    .p-human { background:#0d0a08; display:flex; flex-direction:column; justify-content:center; padding:8vh 8vw 8vh 5.5vw; }
+
+    .p-tag { font-size:clamp(9px,.85vw,13px); font-weight:700; letter-spacing:.2em; text-transform:uppercase; margin-bottom:1.8vh; }
+    .p-ai    .p-tag { color:var(--lime); }
+    .p-human .p-tag { color:var(--pink); }
+
+    .p-head {
+      font-size: clamp(38px,6.5vw,114px);
+      font-weight: 900; letter-spacing:-0.045em;
+      line-height: .95; margin-bottom: 3vh;
+    }
+    .p-ai    .p-head { color:var(--lime); }
+    .p-human .p-head { color:var(--white); }
+
+    .p-items { display:flex; flex-direction:column; gap:.9vh; margin-bottom:3.5vh; }
+    .p-item { display:flex; align-items:center; gap:1vw; font-size:clamp(14px,1.55vw,26px); font-weight:500; color:var(--muted); }
+    .p-dot  { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+    .p-ai    .p-dot { background:var(--lime); }
+    .p-human .p-dot { background:var(--pink); }
+
+    .p-line {
+      font-size: clamp(13px,1.4vw,22px);
+      font-weight:600; line-height:1.45;
+    }
+    .p-ai    .p-line { color:var(--muted); }
+    .p-human .p-line { color:var(--white); }
+    .p-human .p-line em { font-style:normal; color:var(--pink); }
+
+    .p-kicker {
+      position:absolute; bottom:5vh; left:0; right:0;
+      text-align:center;
+      font-size: clamp(15px,1.7vw,28px);
+      font-weight:700; color:var(--white); z-index:10;
+    }
+
+    /* ============================================================
+       SLIDE 12 — THE STORY
+    ============================================================ */
+    #s12 { flex-direction:row; align-items:center; justify-content:space-between; gap:6vw; }
+
+    .s12-left  { flex:1; display:flex; flex-direction:column; gap:2.8vh; }
+    .s12-right { flex-shrink:0; width:clamp(180px,22vw,320px); }
+
+    .s12-cred { font-size:clamp(24px,3.2vw,58px); font-weight:800; letter-spacing:-0.035em; line-height:1.1; }
+    .s12-pain {
+      font-size:clamp(13px,1.4vw,22px); font-weight:500;
+      color:var(--muted); line-height:1.6; max-width:42vw;
+    }
+    .s12-pain em { font-style:normal; color:var(--white); font-weight:700; }
+    .s12-moment { font-size:clamp(20px,2.3vw,40px); font-weight:800; color:var(--lime); letter-spacing:-0.025em; line-height:1.2; }
+
+    .s12-card {
+      width:100%; aspect-ratio:3/4;
+      border-radius:24px; background:var(--dark);
+      border:1px solid var(--border); overflow:hidden; position:relative;
+      display:flex; flex-direction:column; justify-content:flex-end;
+    }
+    .s12-card-bg { position:absolute; inset:0; background:radial-gradient(circle at 50% 35%,rgba(204,255,0,.06) 0%,transparent 60%),linear-gradient(180deg,#1a1a1a 0%,#0a0a0a 100%); }
+    .s12-logo { position:absolute; top:50%; left:50%; transform:translate(-50%,-60%); width:55%; }
+    .s12-bottom { position:relative; z-index:2; padding:18px; background:linear-gradient(to top,rgba(0,0,0,.92) 0%,transparent 100%); }
+    .s12-name  { font-size:clamp(16px,1.4vw,22px); font-weight:800; }
+    .s12-title { font-size:clamp(9px,.82vw,13px); color:var(--lime); font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-top:3px; }
+
+    /* ============================================================
+       SLIDE 13 — THE PROOF
+    ============================================================ */
+    #s13 { gap: 4vh; }
+
+    .s13-eyebrow { font-size:clamp(10px,.9vw,14px); font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+    .s13-row { display:flex; gap:6vw; align-items:center; }
+    .s13-stat { display:flex; flex-direction:column; align-items:center; gap:1.5vh; }
+    .s13-before { font-size:clamp(22px,2.8vw,48px); font-weight:800; color:var(--muted); letter-spacing:-0.03em; text-decoration:line-through; text-decoration-color:var(--pink); text-decoration-thickness:3px; }
+    .s13-arrow  { font-size:clamp(18px,2.2vw,38px); color:var(--lime); font-weight:900; }
+    .s13-after  { font-size:clamp(40px,6.5vw,110px); font-weight:900; color:var(--lime); letter-spacing:-0.05em; line-height:1; }
+    .s13-desc   { font-size:clamp(10px,.9vw,15px); color:var(--muted); font-weight:600; letter-spacing:.08em; text-transform:uppercase; text-align:center; }
+    .s13-div    { width:1px; height:22vh; background:var(--border); }
+    .s13-kicker { font-size:clamp(20px,2.6vw,46px); font-weight:800; letter-spacing:-0.03em; text-align:center; }
+    .s13-kicker em { font-style:normal; color:var(--lime); }
+
+    /* ============================================================
+       SLIDE 14 — THE REVEAL
+    ============================================================ */
+    #s14 { background:#000; gap:4vh; }
+
+    #s14 .particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+    .particle { position:absolute; border-radius:50%; animation:particleUp linear infinite; opacity:0; }
+
+    .s14-logo {
+      width:clamp(200px,26vw,420px);
+      opacity:0; position:relative; z-index:2;
+      animation:logoReveal 1.6s cubic-bezier(0.16,1,0.3,1) forwards;
+      animation-delay:.25s;
+    }
+    .s14-sub {
+      font-size:clamp(15px,1.6vw,26px); color:var(--muted);
+      font-weight:500; text-align:center; max-width:56ch;
+      position:relative; z-index:2;
+    }
+    .s14-sub em { color:var(--white); font-style:normal; font-weight:700; }
+    .s14-stats  { display:flex; gap:4vw; align-items:center; position:relative; z-index:2; }
+    .s14-stat   { text-align:center; }
+    .s14-num    { font-size:clamp(32px,4.5vw,76px); font-weight:900; color:var(--lime); letter-spacing:-0.05em; line-height:1; }
+    .s14-slbl   { font-size:clamp(9px,.8vw,13px); color:var(--muted); font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-top:.4vh; }
+    .s14-sdiv   { width:1px; height:8vh; background:var(--border); }
+
+    /* ============================================================
+       SLIDE 15 — HOW IT WORKS
+    ============================================================ */
+    #s15 { align-items:flex-start; padding-left:8vw; gap:1.5vh; }
+
+    .s15-label { font-size:clamp(10px,.9vw,14px); font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--lime); }
+    .s15-steps { display:flex; flex-direction:column; gap:2.8vh; max-width:85vw; }
+    .s15-step  { display:flex; align-items:center; gap:3vw; }
+    .s15-num   { font-size:clamp(40px,5.5vw,96px); font-weight:900; letter-spacing:-0.055em; line-height:1; color:var(--border); width:clamp(42px,5.5vw,86px); text-align:center; flex-shrink:0; transition:color .4s ease; }
+    .s15-num.lit { color:var(--lime); }
+    .s15-stitle { font-size:clamp(18px,2.1vw,38px); font-weight:700; letter-spacing:-0.02em; line-height:1.2; }
+    .s15-sdesc  { font-size:clamp(11px,1vw,17px); color:var(--muted); font-weight:400; margin-top:4px; }
+    .s15-tag    { display:inline-block; border:1px solid; border-radius:6px; padding:2px 10px; font-size:clamp(8px,.7vw,11px); font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-top:5px; }
+    .s15-tag.ai   { color:var(--lime);   border-color:rgba(204,255,0,.3);   background:rgba(204,255,0,.05); }
+    .s15-tag.hu   { color:var(--pink);   border-color:rgba(255,102,170,.3); background:rgba(255,102,170,.05); }
+    .s15-tag.sys  { color:var(--purple); border-color:rgba(153,102,255,.3); background:rgba(153,102,255,.05); }
+    .s15-result   { font-size:clamp(18px,2.2vw,40px); font-weight:800; letter-spacing:-0.03em; margin-top:1vh; }
+    .s15-result strong { color:var(--lime); }
+
+    /* ============================================================
+       SLIDE 16 — PRICING
+    ============================================================ */
+    #s16 { gap:3vh; }
+
+    .s16-eyebrow { font-size:clamp(10px,.9vw,14px); font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
+    .s16-hero    { font-size:clamp(30px,4.5vw,78px); font-weight:900; letter-spacing:-0.045em; line-height:1.05; text-align:center; }
+    .s16-hero em { font-style:normal; color:var(--lime); }
+    .s16-grid    { display:grid; grid-template-columns:repeat(3,1fr); gap:2.2vw; width:88vw; max-width:980px; }
+
+    .s16-card {
+      background:var(--dark); border:1px solid var(--border);
+      border-radius:20px; padding:2.8vh 2vw;
+      display:flex; flex-direction:column; gap:1.4vh;
+      position:relative;
+    }
+    .s16-card.found { border-color:var(--lime); background:rgba(204,255,0,.04); }
+    .s16-card.found::before {
+      content:'FOUNDING RATE'; position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+      background:var(--lime); color:#000; font-size:9px; font-weight:800;
+      letter-spacing:.15em; padding:3px 13px; border-radius:20px;
+    }
+    .s16-plan    { font-size:clamp(9px,.85vw,13px); font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+    .s16-price   { font-size:clamp(30px,3.8vw,62px); font-weight:900; letter-spacing:-0.045em; line-height:1; }
+    .s16-price .f { color:var(--lime); }
+    .s16-was     { font-size:clamp(11px,.95vw,15px); color:var(--muted); text-decoration:line-through; }
+    .s16-vids    { font-size:clamp(12px,1.1vw,18px); font-weight:700; }
+    .s16-note    { font-size:clamp(9px,.8vw,12px); color:var(--muted); line-height:1.45; }
+    .s16-deadline{ font-size:clamp(13px,1.3vw,21px); font-weight:600; color:var(--muted); }
+    .s16-deadline em { font-style:normal; color:var(--lime); font-weight:800; }
+
+    /* ============================================================
+       SLIDE 17 — LAUNCH VIDEO
+    ============================================================ */
+    #s17 { background:#000; gap:4vh; }
+
+    .s17-title    { font-size:clamp(28px,3.8vw,66px); font-weight:900; letter-spacing:-0.04em; text-align:center; }
+    .s17-title em { font-style:normal; color:var(--lime); }
+    .s17-frame {
+      width:80vw; max-width:920px; aspect-ratio:16/9;
+      background:var(--dark); border-radius:20px;
+      border:1px solid var(--border);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:2.5vh;
+      position:relative; overflow:hidden;
+    }
+    .s17-frame::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,rgba(204,255,0,.04) 0%,transparent 65%); }
+    .s17-play {
+      width:clamp(60px,5.5vw,88px); height:clamp(60px,5.5vw,88px);
+      background:var(--lime); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; position:relative; z-index:2;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .s17-play:hover { transform:scale(1.1); box-shadow:0 0 50px rgba(204,255,0,.55); }
+    .s17-play svg  { width:40%; fill:#000; margin-left:10%; }
+    .s17-plabel    { font-size:clamp(11px,1vw,16px); font-weight:600; color:var(--muted); letter-spacing:.12em; text-transform:uppercase; position:relative; z-index:2; }
+
+    /* ============================================================
+       SLIDE 18 — THE CLOSE
+    ============================================================ */
+    #s18 { gap:3.5vh; }
+
+    .s18-url       { font-size:clamp(32px,5.5vw,96px); font-weight:900; letter-spacing:-0.05em; color:var(--lime); }
+    .s18-qr-wrap   { width:clamp(120px,13vw,200px); aspect-ratio:1; background:#fff; border-radius:14px; padding:10px; }
+    .s18-qr-inner  { width:100%; aspect-ratio:1; background:#000; border-radius:6px; overflow:hidden; }
+    /* Stylised QR pattern */
+    .s18-qr-inner  { background:repeating-conic-gradient(#000 0% 25%,#fff 0% 50%) 0 0/12px 12px; }
+    .s18-seats     { font-size:clamp(12px,1.1vw,18px); font-weight:600; color:var(--muted); text-align:center; }
+    .s18-seats strong { color:var(--lime); }
+    .s18-tagline   { font-size:clamp(16px,2vw,34px); font-weight:700; text-align:center; letter-spacing:-0.02em; line-height:1.35; max-width:68vw; }
+    .s18-tagline em{ font-style:normal; color:var(--muted); }
+  </style>
+</head>
+<body>
+
+<div class="noise-layer"></div>
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-counter" id="slideCounter">1 / 18</div>
+
+<div class="deck" id="deck">
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 1 — THE HOOK
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s1">
+    <div class="s1-question">
+      Is your content<br>actually working?<span class="s1-cursor"></span>
+    </div>
+    <div class="s1-meta">Digital Marketing &amp; Branding Conference 2026 &nbsp;·&nbsp; Kuala Lumpur</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 2 — I SEE YOU
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <div class="s2-line step" data-step="1">You are in one of the <strong>most stressful jobs</strong> on the planet right now.</div>
+    <div class="s2-line dim step" data-step="2">CEO asking why the numbers are flat. Team half the size. Competitor went viral. No idea how.</div>
+    <div class="s2-line dim step" data-step="3" style="font-size:clamp(17px,2vw,36px);">17 AI tools.&nbsp; 17 browser tabs.</div>
+    <div class="s2-line step" data-step="4">And somewhere last year, someone told you: <strong style="color:var(--lime);">"Just use AI."</strong></div>
+    <div class="s2-line dim step" data-step="5" style="font-size:clamp(16px,1.9vw,34px);">So you did.</div>
+    <div class="s2-line step" data-step="6">And now you have <strong>more content than ever.</strong></div>
+    <div class="s2-line punch step" data-step="7">And somehow it feels like less.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 3 — AI SLOP
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <div class="s3-label step" data-step="1">AI SLOP.</div>
+    <div class="s3-compare step" data-step="2">
+      <!-- AI polished -->
+      <div class="s3-phone-wrap">
+        <div class="s3-phone s3-ai">
+          <div class="s3-ai-glow"></div>
+          <div class="s3-ai-face"></div>
+          <div class="s3-ai-shine"></div>
+          <div class="s3-ai-badge">AI Generated</div>
+          <div class="s3-ai-bottom">
+            <div class="s3-ai-tag">✨ Our new formula — because you deserve the best ✨<br>@brandaccount</div>
+            <div class="s3-ai-stat">2,341 likes &nbsp;·&nbsp; 0.3% engagement</div>
+          </div>
+        </div>
+        <div class="s3-card-label" style="color:var(--muted);">Volume. No soul.</div>
+      </div>
+      <!-- Real UGC -->
+      <div class="s3-phone-wrap">
+        <div class="s3-phone s3-ugc">
+          <div class="s3-ugc-warm"></div>
+          <div class="s3-ugc-grain"></div>
+          <div class="s3-ugc-face"></div>
+          <div class="s3-ugc-notch"></div>
+          <div class="s3-ugc-badge">Real UGC</div>
+          <div class="s3-ugc-bottom">
+            <div class="s3-ugc-text">"Okay I need to tell you about this... I've been using it for 3 weeks and I'm genuinely not okay 😭"</div>
+            <div class="s3-ugc-stat">47,200 likes &nbsp;·&nbsp; 8.2% engagement</div>
+          </div>
+        </div>
+        <div class="s3-card-label" style="color:var(--lime);">Imperfect. Converts.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 4 — THE EVOLUTION
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <div class="s4-row">
+      <div class="s4-word step" data-step="1" id="evo1">TOOL</div>
+      <div class="s4-arrow step" data-step="2" id="evoA1">→</div>
+      <div class="s4-word step" data-step="2" id="evo2">PLATFORM</div>
+      <div class="s4-arrow step" data-step="3" id="evoA2">→</div>
+      <div class="s4-word step" data-step="3" id="evo3" style="color:var(--lime);">AGENT</div>
+    </div>
+    <div class="s4-caption step" data-step="4">
+      AI went from <strong>assistant</strong> to <em>operator.</em><br>
+      Agents run workflows while you sleep. The brands winning now understood this first.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 5 — WHERE AI WINS
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <div class="s5-word step" data-step="1">TASKS.</div>
+    <div class="s5-word step" data-step="2" style="color:var(--muted);">EXECUTION.</div>
+    <div class="s5-word step" data-step="3" style="color:var(--muted);">DATA.</div>
+    <div class="s5-caption step" data-step="4">Use it here. Fully. Without guilt.<br>This is your unfair advantage.</div>
+    <div class="s5-stop step" data-step="4">And then. Stop.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 6 — WHAT AI CANNOT DO
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s6">
+    <div class="s6-text">
+      AI cannot make<br>someone<br><span class="s6-lime">trust&nbsp;you.</span>
+    </div>
+    <div class="s6-sub">Trust is built between humans. It always has been. It always will be.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 7 — THE MARKET
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s7">
+    <div class="step" data-step="1" style="text-align:center;">
+      <div style="font-size:clamp(10px,.9vw,14px);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1vh;">Global influencer marketing, 2025</div>
+      <div class="s7-number" id="mktNum">$0</div>
+      <div class="s7-label">Up from $24 billion in 2024. The market is not slowing down.</div>
+    </div>
+    <div class="s7-bars step" data-step="2">
+      <div style="font-size:clamp(10px,.9vw,14px);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2vh;text-align:center;">Where is the money going?</div>
+      <div class="s7-bar-row">
+        <div class="s7-bar-lbl">Macro influencers<br><span style="font-size:.85em;opacity:.6;">1M+ followers</span></div>
+        <div class="s7-bar-track"><div class="s7-bar-fill macro" id="macroBar"><span class="s7-bar-val light">17%</span></div></div>
+      </div>
+      <div class="s7-bar-row">
+        <div class="s7-bar-lbl">Nano &amp; Micro creators<br><span style="font-size:.85em;opacity:.6;">Real people</span></div>
+        <div class="s7-bar-track"><div class="s7-bar-fill micro" id="microBar"><span class="s7-bar-val dark">73%</span></div></div>
+      </div>
+    </div>
+    <div class="s7-kicker step" data-step="3">
+      Nano creators convert at <em>2–3×</em> the rate. Engagement above <em>8%.</em><br>
+      <span style="font-size:.7em;color:var(--muted);font-weight:500;">Why?</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 8 — THE BIG IDEA
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s8">
+    <div class="s8-line1 step" data-step="1">AI made everything perfect.</div>
+    <div class="s8-line2 step" data-step="2">So imperfection became<br>the most valuable thing<br>on the internet.</div>
+    <!-- Phone frames -->
+    <div class="s8-phones step" data-step="2">
+      <div class="s8-phone">
+        <div class="s8-phone-notch"></div>
+        <div class="s8-phone-face"></div>
+        <div class="s8-phone-overlay"></div>
+        <div class="s8-phone-txt">"Okay wait this actually worked..."</div>
+      </div>
+      <div class="s8-phone">
+        <div class="s8-phone-notch"></div>
+        <div class="s8-phone-face"></div>
+        <div class="s8-phone-overlay"></div>
+        <div class="s8-phone-txt">"Not sponsored. Just obsessed."</div>
+      </div>
+      <div class="s8-phone">
+        <div class="s8-phone-notch"></div>
+        <div class="s8-phone-face"></div>
+        <div class="s8-phone-overlay"></div>
+        <div class="s8-phone-txt">"3 weeks in and honestly..."</div>
+      </div>
+      <div class="s8-phone">
+        <div class="s8-phone-notch"></div>
+        <div class="s8-phone-face"></div>
+        <div class="s8-phone-overlay"></div>
+        <div class="s8-phone-txt">"My friend told me about this"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 9 — THE PLATFORMS
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s9">
+    <!-- TikTok -->
+    <div class="s9-card step" data-step="1">
+      <div class="s9-icon tt">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.01a8.16 8.16 0 004.77 1.52V7.08a4.85 4.85 0 01-1-.39z"/></svg>
+      </div>
+      <div>
+        <div class="s9-stat">TikTok auto-labeled <strong>1.3 billion</strong> AI-generated videos</div>
+        <div class="s9-sub">No brand permission required. Their detection. Their label. You found out after.</div>
+      </div>
+    </div>
+    <!-- Meta -->
+    <div class="s9-card step" data-step="2">
+      <div class="s9-icon fb">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 008.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+      </div>
+      <div>
+        <div class="s9-stat">Meta flags <strong>photorealistic AI humans</strong> in ads — automatically</div>
+        <div class="s9-sub">"AI info" sits next to "Sponsored." Your audience sees it every single time.</div>
+      </div>
+    </div>
+    <!-- YouTube -->
+    <div class="s9-card step" data-step="3">
+      <div class="s9-icon yt">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.54 12 3.54 12 3.54s-7.54 0-9.38.51A3.02 3.02 0 00.5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 002.12 2.14C4.46 20.46 12 20.46 12 20.46s7.54 0 9.38-.51a3.02 3.02 0 002.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.54 15.57V8.43L15.82 12l-6.28 3.57z"/></svg>
+      </div>
+      <div>
+        <div class="s9-stat">YouTube requires <strong>AI disclosure</strong> before every upload</div>
+        <div class="s9-sub">Realistic AI-generated people = mandatory label. No exceptions. EU enforcement from August 2026.</div>
+      </div>
+    </div>
+    <div class="s9-footer step" data-step="3">
+      When that label sits next to your brand name, they don't think "interesting choice."<br>They think: <em>"What else is fake?"</em>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 10 — THE LINE
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s10">
+    <div class="s10-title step" data-step="1">There is a line you do not cross.</div>
+    <div class="s10-phones">
+      <!-- Creative AI -->
+      <div class="s10-phone-wrap s10-creative step" data-step="1">
+        <div class="s10-frame">
+          <div class="s10-face"></div>
+          <div class="s10-badge">Creative AI</div>
+          <div class="s10-bottom">Bold campaign.<br>Obviously AI.<br>Audience in on it.</div>
+        </div>
+        <div class="s10-lbl" style="color:var(--purple);">Creative Expression</div>
+        <div class="s10-desc">AI amplifies your brand personality. Audience knows it. Trust stays.</div>
+      </div>
+      <!-- Fake AI Human -->
+      <div class="s10-phone-wrap s10-fake step" data-step="2">
+        <div class="s10-frame">
+          <div class="s10-face"></div>
+          <div class="s10-badge">AI Human</div>
+          <div class="s10-bottom">"This supplement changed my life..."<br><span style="opacity:.6;font-size:.85em;">Generated face. Generated voice.</span></div>
+          <div class="s10-x">✕</div>
+        </div>
+        <div class="s10-lbl" style="color:var(--red);">Trust Destruction</div>
+        <div class="s10-desc">When they find out — and they will — the relationship is gone.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 11 — THE PARTITION (POWER SLIDE)
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s11">
+    <div class="partition">
+      <div class="p-divider" id="pDivider"></div>
+      <!-- AI side -->
+      <div class="p-ai">
+        <div class="p-tag step" data-step="1">Your Unfair Advantage</div>
+        <div class="p-head step" data-step="1">AI<br>AGENTS</div>
+        <div class="p-items step" data-step="1">
+          <div class="p-item"><div class="p-dot"></div>Competitor research</div>
+          <div class="p-item"><div class="p-dot"></div>Brief writing</div>
+          <div class="p-item"><div class="p-dot"></div>Script variations</div>
+          <div class="p-item"><div class="p-dot"></div>Performance data</div>
+          <div class="p-item"><div class="p-dot"></div>72-hour turnaround</div>
+        </div>
+        <div class="p-line step" data-step="3">AI gives you the intelligence<br>to know what to make.</div>
+      </div>
+      <!-- Human side -->
+      <div class="p-human">
+        <div class="p-tag step" data-step="2">What Actually Converts</div>
+        <div class="p-head step" data-step="2">HUMAN<br>CREATORS</div>
+        <div class="p-items step" data-step="2">
+          <div class="p-item"><div class="p-dot"></div>The real face</div>
+          <div class="p-item"><div class="p-dot"></div>The authentic voice</div>
+          <div class="p-item"><div class="p-dot"></div>The imperfect moment</div>
+          <div class="p-item"><div class="p-dot"></div>The genuine story</div>
+          <div class="p-item"><div class="p-dot"></div>The trust signal</div>
+        </div>
+        <div class="p-line step" data-step="3">Humans give you the <em>authenticity</em><br>that makes people buy.</div>
+      </div>
+    </div>
+    <div class="p-kicker step" data-step="3">These are not competing choices. They are two halves of a system.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 12 — THE STORY
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s12">
+    <div class="s12-left">
+      <div class="s12-cred step" data-step="1">14 years.<br>Unilever. L'Oréal.<br>BMW. AI startups.</div>
+      <div class="s12-pain step" data-step="2">
+        I know the <em>3pm Friday panic</em> when your campaign launches Monday and the creator just ghosted you.<br><br>
+        I know the joy of finding a creator who converts — then watching them raise their rate by <em>400%</em> the moment they realize you need them.
+      </div>
+      <div class="s12-moment step" data-step="3">I was not just a marketer.<br>I was a marketer in pain.</div>
+    </div>
+    <div class="s12-right step" data-step="1">
+      <div class="s12-card">
+        <div class="s12-card-bg"></div>
+        <img src="https://getugc.io/brand/Logo_full.svg" alt="GetUGC.io" class="s12-logo">
+        <div class="s12-bottom">
+          <div class="s12-name">Wendy Wang</div>
+          <div class="s12-title">Co-Founder, GetUGC.io</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 13 — THE PROOF
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s13">
+    <div class="s13-eyebrow step" data-step="1">The method existed before the company did.</div>
+    <div class="s13-row step" data-step="1">
+      <div class="s13-stat">
+        <div class="s13-before">$50,000/mo</div>
+        <div class="s13-arrow">↓</div>
+        <div class="s13-after" id="pNum1">$4,000</div>
+        <div class="s13-desc">Content budget</div>
+      </div>
+      <div class="s13-div"></div>
+      <div class="s13-stat">
+        <div class="s13-before">5,000</div>
+        <div class="s13-arrow">↑</div>
+        <div class="s13-after" id="pNum2">40,000</div>
+        <div class="s13-desc">Users</div>
+      </div>
+      <div class="s13-div"></div>
+      <div class="s13-stat" style="gap:.6vh;">
+        <div class="s13-after" style="font-size:clamp(32px,4.5vw,76px);color:var(--white);">3</div>
+        <div style="font-size:clamp(22px,2.8vw,48px);font-weight:700;color:var(--muted);">months</div>
+        <div class="s13-desc">Same timeframe</div>
+      </div>
+    </div>
+    <div class="s13-kicker step" data-step="1">AI-informed. <em>Human-created.</em> Every single time.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 14 — THE REVEAL
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s14">
+    <div class="particles" id="particleContainer"></div>
+    <img src="https://getugc.io/brand/Logo_full.svg" alt="GetUGC.io" class="s14-logo">
+    <div class="s14-sub step" data-step="1">
+      Not an agency. Not a platform. Not synthetic AI content.<br>
+      <em>The system I spent 14 years wishing existed.</em>
+    </div>
+    <div class="s14-stats step" data-step="1">
+      <div class="s14-stat"><div class="s14-num">72h</div><div class="s14-slbl">Delivery</div></div>
+      <div class="s14-sdiv"></div>
+      <div class="s14-stat"><div class="s14-num">10×</div><div class="s14-slbl">Output vs Agency</div></div>
+      <div class="s14-sdiv"></div>
+      <div class="s14-stat"><div class="s14-num">100%</div><div class="s14-slbl">Usage Rights Forever</div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 15 — HOW IT WORKS
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s15">
+    <div class="s15-label step" data-step="1">How it works</div>
+    <div class="s15-steps">
+      <div class="s15-step">
+        <div class="s15-num lit step" data-step="1">01</div>
+        <div class="step" data-step="1">
+          <div class="s15-stitle">AI scans competitors' top-performing content in your category</div>
+          <div class="s15-sdesc">Which hooks. Which formats. What's converting right now.</div>
+          <span class="s15-tag ai">AI Agent</span>
+        </div>
+      </div>
+      <div class="s15-step">
+        <div class="s15-num step" data-step="2" id="sn2">02</div>
+        <div class="step" data-step="2">
+          <div class="s15-stitle">We write the brief from that intelligence</div>
+          <div class="s15-sdesc">You don't brief us. We brief the creators. From live data.</div>
+          <span class="s15-tag sys">Done For You</span>
+        </div>
+      </div>
+      <div class="s15-step">
+        <div class="s15-num step" data-step="3" id="sn3">03</div>
+        <div class="step" data-step="3">
+          <div class="s15-stitle">A vetted human creator films it</div>
+          <div class="s15-sdesc">Real face. Real voice. Real story. The FaceTime-a-friend energy.</div>
+          <span class="s15-tag hu">Human Creator</span>
+        </div>
+      </div>
+      <div class="s15-step">
+        <div class="s15-num step" data-step="4" id="sn4">04</div>
+        <div class="step" data-step="4">
+          <div class="s15-stitle">You approve. You post.</div>
+          <div class="s15-sdesc">Every cycle feeds back. The system gets smarter every month.</div>
+          <span class="s15-tag ai">72 Hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="s15-result step" data-step="4">Competitor-informed. Human-made. <strong>72 hours.</strong></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 16 — PRICING
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s16">
+    <div class="s16-eyebrow step" data-step="1">Founding offer — closes June 1, 2026</div>
+    <div class="s16-hero step" data-step="1"><em>5</em> founding spots. Rate locked for life.</div>
+    <div class="s16-grid step" data-step="2">
+      <div class="s16-card found">
+        <div class="s16-plan">Starter</div>
+        <div class="s16-price"><span class="f">$749</span><span style="font-size:.38em;color:var(--muted);font-weight:500;">/mo</span></div>
+        <div class="s16-was">$1,499/mo standard</div>
+        <div class="s16-vids">5 videos / month</div>
+        <div class="s16-note">1 creator &nbsp;·&nbsp; 2 revision rounds &nbsp;·&nbsp; 100% usage rights forever</div>
+      </div>
+      <div class="s16-card found">
+        <div class="s16-plan">Scale</div>
+        <div class="s16-price"><span class="f">$1,999</span><span style="font-size:.38em;color:var(--muted);font-weight:500;">/mo</span></div>
+        <div class="s16-was">$3,999/mo standard</div>
+        <div class="s16-vids">30 videos / month</div>
+        <div class="s16-note">6 creators &nbsp;·&nbsp; Unlimited revisions &nbsp;·&nbsp; No contract, cancel anytime</div>
+      </div>
+      <div class="s16-card found">
+        <div class="s16-plan">Agency</div>
+        <div class="s16-price"><span class="f">$2,999</span><span style="font-size:.38em;color:var(--muted);font-weight:500;">/mo</span></div>
+        <div class="s16-was">$5,999/mo standard</div>
+        <div class="s16-vids">40 videos / month</div>
+        <div class="s16-note">8 creators &nbsp;·&nbsp; 3 brands &nbsp;·&nbsp; White-label &nbsp;·&nbsp; Dedicated Slack</div>
+      </div>
+    </div>
+    <div class="s16-deadline step" data-step="2">Rate locked for life — <em>while you stay active.</em></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 17 — LAUNCH VIDEO
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s17">
+    <div class="s17-title step" data-step="1"><em>GetUGC.io</em> — The System</div>
+    <div class="s17-frame step" data-step="1">
+      <!--
+        ╔══════════════════════════════════════════════╗
+        ║  EMBED YOUR LAUNCH VIDEO HERE                ║
+        ║                                              ║
+        ║  Option A — Direct MP4:                      ║
+        ║  <video src="YOUR_VIDEO.mp4"                 ║
+        ║    controls autoplay muted playsinline        ║
+        ║    style="width:100%;height:100%;            ║
+        ║    border-radius:20px;object-fit:cover;">    ║
+        ║  </video>                                    ║
+        ║                                              ║
+        ║  Option B — YouTube embed:                   ║
+        ║  <iframe                                     ║
+        ║    src="https://www.youtube.com/embed/ID"    ║
+        ║    style="width:100%;height:100%;border:none;║
+        ║    border-radius:20px;" allowfullscreen>     ║
+        ║  </iframe>                                   ║
+        ╚══════════════════════════════════════════════╝
+      -->
+      <div class="s17-play" onclick="event.stopPropagation()">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+      <div class="s17-plabel">Launch Video — Add your embed above</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 18 — THE CLOSE
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s18">
+    <div class="step" data-step="1" style="display:flex;flex-direction:column;align-items:center;gap:2vh;">
+      <div class="s18-url">getugc.io</div>
+      <div class="s18-qr-wrap">
+        <!--
+          Replace div.s18-qr-inner with:
+          <img src="your-qr-code.png" style="width:100%;border-radius:6px;">
+        -->
+        <div class="s18-qr-inner"></div>
+      </div>
+      <div class="s18-seats"><strong>5 founding spots.</strong>&nbsp; Rate locked for life.&nbsp; Closes June 1.</div>
+    </div>
+    <div class="s18-tagline step" data-step="2">
+      AI will never replace your taste.<br>
+      <em>And it will never replace the moment<br>a real human makes your customer feel something real.</em>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- ============================================================
+     JAVASCRIPT — NAVIGATION ENGINE
+============================================================ -->
+<script>
+(function() {
+
+  const slides      = Array.from(document.querySelectorAll('.slide'));
+  const TOTAL       = slides.length;
+  let current       = 0;
+  let stepIdx       = 0;
+  let transitioning = false;
+
+  /* ── Build step map ───────────────────────────────────────── */
+  const stepMap = slides.map(slide => {
+    const nums = new Set();
+    slide.querySelectorAll('[data-step]').forEach(el => nums.add(+el.dataset.step));
+    return Array.from(nums).sort((a,b) => a-b);
+  });
+
+  /* ── Show slide ───────────────────────────────────────────── */
+  function showSlide(idx) {
+    if (transitioning) return;
+    transitioning = true;
+    slides[current].classList.remove('active');
+    current  = idx;
+    stepIdx  = 0;
+    const s  = slides[current];
+    s.querySelectorAll('.step').forEach(el => el.classList.remove('visible'));
+    s.classList.add('active');
+    onEnter(current);
+    updateUI();
+    setTimeout(() => { transitioning = false; }, 620);
+  }
+
+  /* ── Advance (step or slide) ──────────────────────────────── */
+  function advance() {
+    const steps = stepMap[current];
+    if (steps.length === 0) {
+      if (current < TOTAL - 1) showSlide(current + 1);
+      return;
+    }
+    const n = steps[stepIdx];
+    if (n !== undefined) {
+      const slide = slides[current];
+      const els   = slide.querySelectorAll(`[data-step="${n}"]`);
+      els.forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 65);
+      });
+      onStep(current, n);
+      stepIdx++;
+    } else {
+      if (current < TOTAL - 1) showSlide(current + 1);
+    }
+  }
+
+  function back() {
+    if (current > 0) showSlide(current - 1);
+  }
+
+  /* ── On-enter hooks ───────────────────────────────────────── */
+  function onEnter(idx) {
+    if (idx === 13) spawnParticles(); // Slide 14 logo reveal
+  }
+
+  /* ── On-step hooks ────────────────────────────────────────── */
+  function onStep(slideIdx, stepNum) {
+    // Slide 7 — market number & bars
+    if (slideIdx === 6 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
+    if (slideIdx === 6 && stepNum === 2) {
+      setTimeout(() => {
+        document.getElementById('macroBar').style.width = '17%';
+        document.getElementById('microBar').style.width = '73%';
+      }, 80);
+    }
+    // Slide 11 — divider line
+    if (slideIdx === 10 && stepNum === 3) {
+      document.getElementById('pDivider').classList.add('animate');
+    }
+    // Slide 13 — proof counters
+    if (slideIdx === 12 && stepNum === 1) {
+      setTimeout(() => {
+        countUpInt('pNum1', 50000, 4000,  1.3, '$', '');
+        countUpInt('pNum2', 5000,  40000, 1.3, '', '');
+      }, 200);
+    }
+    // Slide 15 — light up step numbers
+    if (slideIdx === 14) {
+      ['sn2','sn3','sn4'].forEach((id, i) => {
+        if (stepNum >= i + 2) {
+          const el = document.getElementById(id);
+          if (el) el.classList.add('lit');
+        }
+      });
+    }
+  }
+
+  /* ── Counter: decimal display ─────────────────────────────── */
+  function countUpDisplay(id, from, to, dur, pre, suf) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const t0 = performance.now();
+    (function tick(now) {
+      const p  = Math.min((now - t0) / (dur * 1000), 1);
+      const e  = 1 - Math.pow(1 - p, 3);
+      const v  = from + (to - from) * e;
+      el.textContent = pre + v.toFixed(2) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = pre + to.toFixed(2) + suf;
+    })(t0);
+  }
+
+  /* ── Counter: integer display ─────────────────────────────── */
+  function countUpInt(id, from, to, dur, pre, suf) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const t0 = performance.now();
+    (function tick(now) {
+      const p = Math.min((now - t0) / (dur * 1000), 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      const v = Math.round(from + (to - from) * e);
+      el.textContent = pre + v.toLocaleString() + suf;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = pre + to.toLocaleString() + suf;
+    })(t0);
+  }
+
+  /* ── Particles (Slide 14) ─────────────────────────────────── */
+  function spawnParticles() {
+    const c = document.getElementById('particleContainer');
+    if (!c) return;
+    c.innerHTML = '';
+    for (let i = 0; i < 50; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = 2 + Math.random() * 4;
+      p.style.cssText = `
+        left:${Math.random()*100}%;
+        width:${size}px; height:${size}px;
+        background:${Math.random() > .45 ? '#CCFF00' : '#F5F5F5'};
+        animation-duration:${5 + Math.random() * 7}s;
+        animation-delay:${Math.random() * 3}s;
+        --d:${(Math.random() - .5) * 260};
+      `;
+      c.appendChild(p);
+    }
+  }
+
+  /* ── UI updates ───────────────────────────────────────────── */
+  function updateUI() {
+    document.getElementById('progressBar').style.width = ((current + 1) / TOTAL * 100) + '%';
+    document.getElementById('slideCounter').textContent = (current + 1) + ' / ' + TOTAL;
+  }
+
+  /* ── Input handling ───────────────────────────────────────── */
+  document.addEventListener('click', e => {
+    if (e.target.closest('.s17-play')) return;
+    advance();
+  });
+
+  document.addEventListener('keydown', e => {
+    if ([' ','ArrowRight','ArrowDown'].includes(e.key)) { e.preventDefault(); advance(); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); back(); }
+    // Direct slide jump (1–9)
+    const n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 9 && n <= TOTAL) showSlide(n - 1);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 48) { dx < 0 ? advance() : back(); }
+  });
+
+  /* ── Init ─────────────────────────────────────────────────── */
+  slides[0].classList.add('active');
+  updateUI();
+
+})();
+</script>
+</body>
+</html>

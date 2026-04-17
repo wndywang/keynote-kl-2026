@@ -322,6 +322,85 @@
     }
 
     /* ============================================================
+       SLIDE 6b — BRAND BACKLASH
+    ============================================================ */
+    #s-backlash { background:#000; padding:4.5vh 7vw 3vh; align-items:flex-start; justify-content:flex-start; gap:0; overflow:hidden; }
+
+    .bl-top { width:100%; margin-bottom:3vh; }
+    .bl-badge {
+      display:inline-flex; align-items:center; gap:.5vw;
+      background:var(--red); color:#fff;
+      font-size:clamp(8px,.7vw,11px); font-weight:800;
+      letter-spacing:.18em; text-transform:uppercase;
+      padding:3px 12px; border-radius:4px; margin-bottom:1.5vh;
+    }
+    .bl-title {
+      font-size:clamp(28px,4.2vw,76px); font-weight:900;
+      letter-spacing:-0.04em; line-height:1.0; color:var(--white);
+      margin-bottom:.5vh;
+    }
+    .bl-sub { font-size:clamp(12px,1.2vw,20px); color:var(--muted); font-weight:500; }
+
+    .bl-body { display:flex; gap:3.5vw; width:100%; align-items:flex-start; }
+    .bl-left  { flex:1.1; display:flex; flex-direction:column; gap:1.6vh; }
+    .bl-right { flex:.9; display:flex; flex-direction:column; gap:1.4vh; }
+
+    /* Headline cards — spin-in via overriding initial step transform */
+    .bh-card {
+      background:var(--dark); border:1px solid #2a2a2a; border-radius:12px;
+      padding:1.6vh 1.6vw; display:flex; align-items:flex-start; gap:1vw;
+    }
+    .bh-card.step { transform: translateY(28px) rotateZ(-3deg) scale(0.91); }
+    .bh-dot { width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:.45em; }
+    .bh-brand {
+      font-size:clamp(8px,.72vw,11px); font-weight:800; color:var(--red);
+      letter-spacing:.14em; text-transform:uppercase; margin-bottom:.3vh;
+    }
+    .bh-headline { font-size:clamp(11px,1.1vw,18px); font-weight:700; color:var(--white); line-height:1.35; }
+    .bh-source   { font-size:clamp(7px,.62vw,9px); color:var(--muted); margin-top:.25vh; }
+
+    .bh-stat {
+      background:rgba(204,255,0,.07); border:1px solid rgba(204,255,0,.22);
+      border-radius:12px; padding:1.6vh 1.6vw; display:flex; align-items:center; gap:1.4vw;
+    }
+    .bh-stat.step { transform: translateY(28px) scale(0.91); }
+    .bh-stat-num  { font-size:clamp(32px,4vw,68px); font-weight:900; color:var(--lime); letter-spacing:-0.04em; line-height:1; flex-shrink:0; }
+    .bh-stat-lbl  { font-size:clamp(10px,.9vw,14px); color:var(--muted); font-weight:500; line-height:1.45; }
+
+    /* Comment bubbles */
+    .bc-bubble {
+      background:#141414; border:1px solid #252525; border-radius:14px;
+      padding:1.4vh 1.5vw; display:flex; flex-direction:column; gap:.5vh;
+    }
+    .bc-bubble.step { transform: translateY(24px) scale(0.94); }
+    .bc-name  { font-size:clamp(8px,.72vw,11px); font-weight:700; color:var(--white); }
+    .bc-text  { font-size:clamp(10px,.95vw,15px); color:rgba(255,255,255,.8); line-height:1.45; font-style:italic; }
+    .bc-likes { font-size:clamp(7px,.62vw,10px); color:var(--muted); margin-top:.2vh; }
+
+    /* TikTok phone */
+    .bl-tt { display:flex; flex-direction:column; align-items:center; gap:1vh; margin-top:.5vh; }
+    .tt-wrap {
+      width:clamp(90px,9.5vw,160px); aspect-ratio:9/16;
+      border-radius:18px; overflow:hidden; position:relative;
+      border:2px solid #333; background:#0a0a0a; cursor:pointer; flex-shrink:0;
+    }
+    .tt-poster {
+      position:absolute; inset:0; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:.8vh;
+      background:linear-gradient(160deg,#1a0a0a,#000);
+      transition:background .2s;
+    }
+    .tt-poster:hover { background:linear-gradient(160deg,#2a1010,#080808); }
+    .tt-play-ring {
+      width:clamp(28px,3.2vw,50px); height:clamp(28px,3.2vw,50px);
+      border-radius:50%; background:var(--pink);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .tt-play-ring svg { width:40%; fill:#fff; margin-left:10%; }
+    .tt-lbl { font-size:clamp(6px,.58vw,9px); color:rgba(255,255,255,.6); font-weight:600; letter-spacing:.07em; text-align:center; }
+    .tt-caption { font-size:clamp(7px,.62vw,9px); color:var(--muted); text-align:center; max-width:clamp(90px,9.5vw,160px); line-height:1.4; }
+
+    /* ============================================================
        SLIDE 7 — THE MARKET
     ============================================================ */
     #s7 { gap: 3vh; }
@@ -934,6 +1013,68 @@
   </div>
 
   <!-- ══════════════════════════════════════════
+       SLIDE 6b — BRAND BACKLASH
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s-backlash">
+    <div class="bl-top step" data-step="1">
+      <div class="bl-badge">They tried it</div>
+      <div class="bl-title">The audience noticed.</div>
+      <div class="bl-sub">When you fake trust, you lose it. Publicly.</div>
+    </div>
+    <div class="bl-body">
+      <div class="bl-left">
+        <div class="bh-card step" data-step="2">
+          <div class="bh-dot"></div>
+          <div>
+            <div class="bh-brand">Coca-Cola</div>
+            <div class="bh-headline">AI Christmas ad condemned as "utterly soulless" — backlash trended globally across every platform</div>
+            <div class="bh-source">Business Insider &middot; Dec 2025</div>
+          </div>
+        </div>
+        <div class="bh-card step" data-step="3">
+          <div class="bh-dot"></div>
+          <div>
+            <div class="bh-brand">McDonald's + Meta</div>
+            <div class="bh-headline">AI-generated creator content exposed as "uncanny and fake" — #AIad trending for all the wrong reasons</div>
+            <div class="bh-source">Business Insider &middot; Dec 2025</div>
+          </div>
+        </div>
+        <div class="bh-stat step" data-step="4">
+          <div class="bh-stat-num">96%</div>
+          <div class="bh-stat-lbl">of major global brands now fear AI influencers will damage consumer trust<br><span style="color:var(--lime);font-weight:700;">— World Federation of Advertisers, 2025</span></div>
+        </div>
+      </div>
+      <div class="bl-right">
+        <div class="bc-bubble step" data-step="5">
+          <div class="bc-name">Stacey Knight</div>
+          <div class="bc-text">"Yuck, I'd never buy anything off an AI influencer. If I can't feel authenticity or a connection with the creator I watch, I'm not the slightest bit interested."</div>
+        </div>
+        <div class="bc-bubble step" data-step="5">
+          <div class="bc-name">Your.Crystal.Vision</div>
+          <div class="bc-text">"AI-generated ads are false advertisement and should be handled that way."</div>
+          <div class="bc-likes">1,649 likes &middot; Aug 2025</div>
+        </div>
+        <div class="bc-bubble step" data-step="5">
+          <div class="bc-name">Sandy David</div>
+          <div class="bc-text">"Damn scary. I'm worried for my children — equally challenging for those of us going against unrealistic beauty standards to keep showing up."</div>
+          <div class="bc-likes">@whatbellathinks (Creator): "Yes!!! 100% agree"</div>
+        </div>
+        <div class="bl-tt step" data-step="6">
+          <div class="tt-wrap" id="ttPhone" onclick="loadTT(this)">
+            <div class="tt-poster" id="ttPoster">
+              <div class="tt-play-ring">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+              <div class="tt-lbl">Watch the<br>audience react</div>
+            </div>
+          </div>
+          <div class="tt-caption">ABC News &middot; public reaction to AI influencers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
        SLIDE 7 — THE MARKET
   ══════════════════════════════════════════ -->
   <div class="slide" id="s7">
@@ -1368,9 +1509,19 @@
   }
 
   /* ── On-enter hooks ───────────────────────────────────────── */
+  function loadTT(el) {
+    const poster = el.querySelector('.tt-poster');
+    if (poster) poster.remove();
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.tiktok.com/embed/v2/7543977283942403341?autoplay=1';
+    iframe.allow = 'autoplay; encrypted-media; fullscreen';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+    el.appendChild(iframe);
+  }
+
   function onEnter(idx) {
-    // Slide 9 — UGC wall: cascade phone reveals
-    if (idx === 9) { // UGC wall (shifted +1: story now at idx 1)
+    // Slide 10 — UGC wall: cascade phone reveals
+    if (idx === 10) {
       ['wp1','wp2','wp3','wp4'].forEach((id, i) => {
         setTimeout(() => {
           const el = document.getElementById(id);
@@ -1378,32 +1529,32 @@
         }, 250 + i * 180);
       });
     }
-    if (idx === 14) spawnParticles(); // Slide 15 logo reveal (unchanged)
+    if (idx === 15) spawnParticles(); // Slide 16 logo reveal
   }
 
   /* ── On-step hooks ────────────────────────────────────────── */
   function onStep(slideIdx, stepNum) {
     // Slide 8 — market number & bars (shifted +1: story now at idx 1)
-    if (slideIdx === 7 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
-    if (slideIdx === 7 && stepNum === 2) {
+    if (slideIdx === 8 && stepNum === 1) countUpDisplay('mktNum', 0, 32.55, 1.6, '$', 'B');
+    if (slideIdx === 8 && stepNum === 2) {
       setTimeout(() => {
         document.getElementById('macroBar').style.width = '17%';
         document.getElementById('microBar').style.width = '73%';
       }, 80);
     }
-    // Slide 13 — divider line (shifted +1)
-    if (slideIdx === 12 && stepNum === 3) {
+    // Slide 14 — divider line
+    if (slideIdx === 13 && stepNum === 3) {
       document.getElementById('pDivider').classList.add('animate');
     }
-    // Slide 14 — proof counters (unchanged)
-    if (slideIdx === 13 && stepNum === 1) {
+    // Slide 15 — proof counters
+    if (slideIdx === 14 && stepNum === 1) {
       setTimeout(() => {
         countUpInt('pNum1', 50000, 4000,  1.3, '$', '');
         countUpInt('pNum2', 5000,  40000, 1.3, '', '');
       }, 200);
     }
-    // Slide 16 — light up step numbers (unchanged)
-    if (slideIdx === 15) {
+    // Slide 17 — light up step numbers
+    if (slideIdx === 16) {
       ['sn2','sn3','sn4'].forEach((id, i) => {
         if (stepNum >= i + 2) {
           const el = document.getElementById(id);

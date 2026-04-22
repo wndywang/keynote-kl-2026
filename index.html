@@ -663,12 +663,36 @@
     .p-human .p-line { color:var(--white); }
     .p-human .p-line em { font-style:normal; color:var(--pink); }
 
+    .p-framework-name {
+      position:absolute; top:2.5vh; left:0; right:0; text-align:center;
+      font-size:clamp(8px,.75vw,12px); font-weight:700; letter-spacing:.3em;
+      text-transform:uppercase; color:var(--lime); z-index:10; opacity:.75;
+    }
+
     .p-kicker {
-      position:absolute; bottom:5vh; left:0; right:0;
+      position:absolute; bottom:13vh; left:0; right:0;
       text-align:center;
       font-size: clamp(15px,1.7vw,28px);
       font-weight:700; color:var(--white); z-index:10;
     }
+
+    .p-ceo {
+      position:absolute; bottom:3vh; left:9%; right:9%;
+      text-align:center; z-index:10;
+      padding:1.4vh 2.5vw;
+      border:1px solid rgba(204,255,0,0.3);
+      border-radius:12px;
+      background:rgba(204,255,0,0.05);
+    }
+    .p-ceo-label {
+      font-size:clamp(7px,.62vw,10px); font-weight:700; letter-spacing:.25em;
+      text-transform:uppercase; color:var(--lime); opacity:.7; margin-bottom:.6vh;
+    }
+    .p-ceo-text {
+      font-size:clamp(12px,1.2vw,19px); font-weight:500;
+      color:var(--white); line-height:1.55;
+    }
+    .p-ceo-text strong { color:var(--lime); font-weight:700; }
 
     /* ============================================================
        SLIDE 12 — THE STORY
@@ -1351,6 +1375,10 @@
   <div class="slide" id="s11">
     <div class="partition">
       <div class="p-divider" id="pDivider"></div>
+
+      <!-- Framework name eyebrow -->
+      <div class="p-framework-name step" data-step="1">The Two-Layer System</div>
+
       <!-- AI side -->
       <div class="p-ai">
         <div class="p-tag step" data-step="1">Your Unfair Advantage</div>
@@ -1377,8 +1405,20 @@
         </div>
         <div class="p-line step" data-step="3">Humans give you the <em>authenticity</em><br>that makes people buy.</div>
       </div>
+
+      <!-- Kicker -->
+      <div class="p-kicker step" data-step="3">These are not competing choices. They are two halves of a system.</div>
+
+      <!-- CEO-repeatable takeaway — step 4 -->
+      <div class="p-ceo step" data-step="4">
+        <div class="p-ceo-label">Take this back to your team</div>
+        <div class="p-ceo-text">
+          <strong>AI gives you the intelligence to know what to make.</strong>
+          Human creators give you the authenticity that makes people buy it.
+        </div>
+      </div>
+
     </div>
-    <div class="p-kicker step" data-step="3">These are not competing choices. They are two halves of a system.</div>
   </div>
 
   <!-- ══════════════════════════════════════════

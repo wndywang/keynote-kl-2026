@@ -1488,30 +1488,13 @@
   ══════════════════════════════════════════ -->
   <div class="slide" id="s17">
     <div class="s17-title step" data-step="1"><em>GetUGC.io</em> — The System</div>
-    <div class="s17-frame step" data-step="1">
-      <!--
-        ╔══════════════════════════════════════════════╗
-        ║  EMBED YOUR LAUNCH VIDEO HERE                ║
-        ║                                              ║
-        ║  Option A — Direct MP4:                      ║
-        ║  <video src="YOUR_VIDEO.mp4"                 ║
-        ║    controls autoplay muted playsinline        ║
-        ║    style="width:100%;height:100%;            ║
-        ║    border-radius:20px;object-fit:cover;">    ║
-        ║  </video>                                    ║
-        ║                                              ║
-        ║  Option B — YouTube embed:                   ║
-        ║  <iframe                                     ║
-        ║    src="https://www.youtube.com/embed/ID"    ║
-        ║    style="width:100%;height:100%;border:none;║
-        ║    border-radius:20px;" allowfullscreen>     ║
-        ║  </iframe>                                   ║
-        ╚══════════════════════════════════════════════╝
-      -->
-      <div class="s17-play" onclick="event.stopPropagation()">
+    <div class="s17-frame step" data-step="1" style="cursor:default;">
+      <video id="s17vid" src="assets/KeynoteTeaser.mp4" playsinline
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:20px;z-index:1;display:none;"></video>
+      <div class="s17-play" id="s17playBtn" onclick="event.stopPropagation(); toggleS17Video()">
         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
       </div>
-      <div class="s17-plabel">Launch Video — Add your embed above</div>
+      <div class="s17-plabel" id="s17plabel">Watch the teaser</div>
     </div>
   </div>
 
@@ -1568,6 +1551,13 @@
   /* ── Show slide ───────────────────────────────────────────── */
   function showSlide(idx) {
     if (transitioning) return;
+    const vid = document.getElementById('s17vid');
+    if (vid && !vid.paused) {
+      vid.pause();
+      vid.style.display = 'none';
+      document.getElementById('s17playBtn').style.opacity = '1';
+      document.getElementById('s17plabel').style.opacity = '1';
+    }
     transitioning = true;
     slides[current].classList.remove('active');
     current  = idx;
@@ -1740,7 +1730,27 @@
   }
 
   /* ── Input handling ───────────────────────────────────────── */
-  document.addEventListener('click', e => {
+  function toggleS17Video() {
+    const vid = document.getElementById('s17vid');
+    const btn = document.getElementById('s17playBtn');
+    const lbl = document.getElementById('s17plabel');
+    if (vid.style.display === 'none') {
+      vid.style.display = 'block';
+      vid.play();
+      btn.style.opacity = '0';
+      lbl.style.opacity = '0';
+    } else if (vid.paused) {
+      vid.play();
+      btn.style.opacity = '0';
+      lbl.style.opacity = '0';
+    } else {
+      vid.pause();
+      btn.style.opacity = '1';
+      lbl.style.opacity = '1';
+    }
+  }
+
+document.addEventListener('click', e => {
     if (e.target.closest('.s17-play')) return;
     advance();
   });

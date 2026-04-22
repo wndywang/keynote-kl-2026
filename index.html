@@ -757,28 +757,36 @@
     /* ============================================================
        SLIDE 14 — THE REVEAL
     ============================================================ */
-    #s14 { background:#000; gap:4vh; }
+    #s14 { background:#000; gap:6vh; justify-content:center; }
 
     #s14 .particles { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
     .particle { position:absolute; border-radius:50%; animation:particleUp linear infinite; opacity:0; }
 
     .s14-logo {
-      width:clamp(200px,26vw,420px);
+      width:clamp(200px,24vw,380px);
       opacity:0; position:relative; z-index:2;
       animation:logoReveal 1.6s cubic-bezier(0.16,1,0.3,1) forwards;
       animation-delay:.25s;
     }
     .s14-sub {
-      font-size:clamp(15px,1.6vw,26px); color:var(--muted);
-      font-weight:500; text-align:center; max-width:56ch;
+      font-size:clamp(16px,1.7vw,28px); color:var(--muted);
+      font-weight:500; text-align:center;
+      max-width:52ch; line-height:1.55;
       position:relative; z-index:2;
     }
     .s14-sub em { color:var(--white); font-style:normal; font-weight:700; }
-    .s14-stats  { display:flex; gap:4vw; align-items:center; position:relative; z-index:2; }
+    .s14-stats  {
+      display:flex; gap:6vw; align-items:center;
+      position:relative; z-index:2;
+      padding:3.5vh 5vw;
+      background:rgba(255,255,255,0.025);
+      border:1px solid var(--border);
+      border-radius:20px;
+    }
     .s14-stat   { text-align:center; }
-    .s14-num    { font-size:clamp(32px,4.5vw,76px); font-weight:900; color:var(--lime); letter-spacing:-0.05em; line-height:1; }
-    .s14-slbl   { font-size:clamp(9px,.8vw,13px); color:var(--muted); font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-top:.4vh; }
-    .s14-sdiv   { width:1px; height:8vh; background:var(--border); }
+    .s14-num    { font-size:clamp(36px,5vw,84px); font-weight:900; color:var(--lime); letter-spacing:-0.05em; line-height:1; }
+    .s14-slbl   { font-size:clamp(9px,.82vw,13px); color:var(--muted); font-weight:700; letter-spacing:.14em; text-transform:uppercase; margin-top:.6vh; }
+    .s14-sdiv   { width:1px; height:7vh; background:var(--border); }
 
     /* ============================================================
        SLIDE 15 — HOW IT WORKS
@@ -1479,7 +1487,7 @@
       Not an agency. Not a platform. Not synthetic AI content.<br>
       <em>The system I spent 14 years wishing existed.</em>
     </div>
-    <div class="s14-stats step" data-step="1">
+    <div class="s14-stats step" data-step="2">
       <div class="s14-stat"><div class="s14-num">72h</div><div class="s14-slbl">Delivery</div></div>
       <div class="s14-sdiv"></div>
       <div class="s14-stat"><div class="s14-num">10×</div><div class="s14-slbl">Output vs Agency</div></div>

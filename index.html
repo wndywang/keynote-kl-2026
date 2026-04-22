@@ -91,7 +91,28 @@
       font-size: 11px; font-weight: 600;
       color: var(--border); z-index: 200;
       letter-spacing: 0.1em;
+      cursor: pointer; user-select: none;
+      transition: color 0.2s;
     }
+    .slide-counter:hover { color: var(--white); }
+
+    /* Slide picker */
+    .slide-picker {
+      display: none; position: fixed; bottom: 40px; right: 20px;
+      background: rgba(20,20,20,0.97); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px;
+      z-index: 500; backdrop-filter: blur(12px);
+    }
+    .slide-picker.open { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .sp-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--dark); border: 1px solid var(--border);
+      color: var(--muted); font-size: 11px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sp-btn:hover { background: var(--border); color: var(--white); }
+    .sp-btn.active { background: var(--lime); color: #000; border-color: var(--lime); }
 
     /* ============================================================
        NOISE TEXTURE LAYER
@@ -897,7 +918,8 @@
 
 <div class="noise-layer"></div>
 <div class="progress-bar" id="progressBar"></div>
-<div class="slide-counter" id="slideCounter">1 / 18</div>
+<div class="slide-counter" id="slideCounter" onclick="event.stopPropagation(); togglePicker()">1 / 20</div>
+<div class="slide-picker" id="slidePicker"></div>
 
 <div class="deck" id="deck">
 
@@ -1727,15 +1749,37 @@
   function updateUI() {
     document.getElementById('progressBar').style.width = ((current + 1) / TOTAL * 100) + '%';
     document.getElementById('slideCounter').textContent = (current + 1) + ' / ' + TOTAL;
+    document.querySelectorAll('.sp-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === current);
+    });
+  }
+
+  /* ── Slide picker ─────────────────────────────────────────── */
+  (function buildPicker() {
+    const picker = document.getElementById('slidePicker');
+    for (let i = 0; i < TOTAL; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'sp-btn';
+      btn.textContent = i + 1;
+      btn.onclick = e => { e.stopPropagation(); showSlide(i); closePicker(); };
+      picker.appendChild(btn);
+    }
+  })();
+
+  function togglePicker() {
+    document.getElementById('slidePicker').classList.toggle('open');
+  }
+  function closePicker() {
+    document.getElementById('slidePicker').classList.remove('open');
   }
 
   /* ── Input handling ───────────────────────────────────────── */
-  document.addEventListener('click', () => advance());
+  document.addEventListener('click', () => { closePicker(); advance(); });
 
   document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closePicker(); return; }
     if ([' ','ArrowRight','ArrowDown'].includes(e.key)) { e.preventDefault(); advance(); }
     if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); back(); }
-    // Direct slide jump (1–9)
     const n = parseInt(e.key, 10);
     if (n >= 1 && n <= 9 && n <= TOTAL) showSlide(n - 1);
   });

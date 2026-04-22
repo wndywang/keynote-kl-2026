@@ -508,6 +508,22 @@
     }
     .s7-kicker em { font-style:normal; color: var(--lime); }
 
+    .s7-eng {
+      display:flex; align-items:center; justify-content:center;
+      width:78vw; max-width:900px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid var(--border); border-radius:16px;
+      padding:3vh 4vw;
+      gap:0;
+    }
+    .s7-eng-col { display:flex; flex-direction:column; align-items:center; gap:.6vh; flex:1; }
+    .s7-eng-num { font-size:clamp(30px,4.2vw,72px); font-weight:900; letter-spacing:-0.03em; line-height:1; }
+    .s7-eng-lbl { font-size:clamp(9px,.72vw,12px); font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); text-align:center; line-height:1.45; }
+    .s7-eng-div { width:1px; height:7vh; background:var(--border); flex-shrink:0; margin:0 3vw; }
+    .s7-eng-hero { display:flex; flex-direction:column; align-items:center; gap:.4vh; flex:1.2; }
+    .s7-eng-hero-num { font-size:clamp(56px,8vw,140px); font-weight:900; letter-spacing:-0.05em; line-height:1; color:var(--lime); }
+    .s7-eng-hero-lbl { font-size:clamp(9px,.78vw,13px); font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--lime); opacity:.75; }
+
     /* ============================================================
        SLIDE 8 — THE BIG IDEA
     ============================================================ */
@@ -1227,20 +1243,23 @@
         <div class="s7-bar-track"><div class="s7-bar-fill micro" id="microBar"><span class="s7-bar-val dark">73%</span></div></div>
       </div>
     </div>
-    <div class="step" data-step="3" style="display:flex;flex-direction:column;align-items:center;gap:2vh;width:78vw;max-width:920px;">
-      <div style="display:flex;gap:5vw;align-items:flex-end;justify-content:center;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh;">
-          <div style="width:clamp(52px,5.2vw,86px);height:clamp(52px,5.2vw,86px);border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:clamp(10px,.95vw,16px);font-weight:900;color:var(--muted);">0.8%</div>
-          <div style="font-size:clamp(9px,.78vw,12px);color:var(--muted);font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.4;">Hero &amp; celebrity<br>engagement</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh;">
-          <div style="width:clamp(108px,11vw,182px);height:clamp(108px,11vw,182px);border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:clamp(24px,2.6vw,44px);font-weight:900;color:#000;">6.4%</div>
-          <div style="font-size:clamp(9px,.78vw,12px);color:var(--lime);font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.4;">Micro &amp; UGC<br>engagement</div>
-        </div>
-        <div style="font-size:clamp(22px,3vw,52px);font-weight:900;color:var(--white);padding-bottom:clamp(28px,3.5vh,56px);letter-spacing:-.03em;">= 8&times; more</div>
+    <div class="s7-eng step" data-step="3">
+      <div class="s7-eng-col">
+        <div class="s7-eng-num" style="color:var(--muted);">0.8%</div>
+        <div class="s7-eng-lbl">Celebrity &amp;<br>hero engagement</div>
       </div>
-      <div class="s7-kicker" style="margin-top:.5vh;">Same budget. Micro &amp; UGC creators convert at <em>2&ndash;3&times;</em> the rate. <em>8&times;</em> the engagement.</div>
+      <div class="s7-eng-div"></div>
+      <div class="s7-eng-hero">
+        <div class="s7-eng-hero-num">8×</div>
+        <div class="s7-eng-hero-lbl">more engagement</div>
+      </div>
+      <div class="s7-eng-div"></div>
+      <div class="s7-eng-col">
+        <div class="s7-eng-num" style="color:var(--lime);">6.4%</div>
+        <div class="s7-eng-lbl" style="color:var(--lime);">Micro &amp; UGC<br>engagement</div>
+      </div>
     </div>
+    <div class="s7-kicker step" data-step="3" style="margin-top:2.5vh;">Same budget. Micro &amp; UGC creators convert at <em>2&ndash;3&times;</em> the rate. <em>8&times;</em> the engagement.</div>
   </div>
 
   <!-- ══════════════════════════════════════════

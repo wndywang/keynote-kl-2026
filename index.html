@@ -99,23 +99,20 @@
     }
     .slide-counter:hover { color: var(--white); }
 
-    /* Slide picker */
-    .slide-picker {
-      display: none; position: fixed; bottom: 40px; right: 20px;
-      background: rgba(20,20,20,0.97); border: 1px solid var(--border);
-      border-radius: 12px; padding: 12px;
-      z-index: 500; backdrop-filter: blur(12px);
+    /* Slide nav strip */
+    .slide-nav {
+      position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 3px; z-index: 200; align-items: center;
     }
-    .slide-picker.open { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-    .sp-btn {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--dark); border: 1px solid var(--border);
-      color: var(--muted); font-size: 11px; font-weight: 700;
+    .sn-btn {
+      min-width: 26px; height: 22px; padding: 0 4px;
+      border-radius: 5px; background: transparent; border: none;
+      color: #383838; font-size: 10px; font-weight: 700;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s, color 0.15s;
+      transition: color 0.15s, background 0.15s;
     }
-    .sp-btn:hover { background: var(--border); color: var(--white); }
-    .sp-btn.active { background: var(--lime); color: #000; border-color: var(--lime); }
+    .sn-btn:hover { color: var(--white); background: rgba(255,255,255,.07); }
+    .sn-btn.active { color: var(--lime); }
 
     /* ============================================================
        NOISE TEXTURE LAYER
@@ -921,8 +918,8 @@
 
 <div class="noise-layer"></div>
 <div class="progress-bar" id="progressBar"></div>
-<div class="slide-counter" id="slideCounter" onclick="event.stopPropagation(); togglePicker()">1 / 20</div>
-<div class="slide-picker" id="slidePicker"></div>
+<div class="slide-counter" id="slideCounter">1 / 20</div>
+<div class="slide-nav" id="slideNav"></div>
 
 <div class="deck" id="deck">
 
@@ -1512,8 +1509,13 @@
        SLIDE 17 — LAUNCH VIDEO
   ══════════════════════════════════════════ -->
   <div class="slide" id="s17">
+    <div id="s17intro" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5vh;text-align:center;">
+      <div style="font-size:clamp(10px,.85vw,13px);font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);">Now Showing</div>
+      <div style="font-size:clamp(42px,7vw,124px);font-weight:900;letter-spacing:-0.045em;line-height:1;">Introducing<br><span style="color:var(--lime);">GetUGC.io</span></div>
+      <div style="font-size:clamp(13px,1.3vw,20px);color:var(--muted);font-weight:500;margin-top:1vh;">Click to play</div>
+    </div>
     <video id="s17vid" src="assets/KeynoteTeaser.mp4" playsinline
-      style="width:100%;height:100%;object-fit:contain;display:block;"></video>
+      style="width:100%;height:100%;object-fit:contain;display:none;"></video>
   </div>
 
   <!-- ══════════════════════════════════════════
@@ -1570,7 +1572,9 @@
   function showSlide(idx) {
     if (transitioning) return;
     const vid = document.getElementById('s17vid');
-    if (vid) { vid.pause(); vid.currentTime = 0; }
+    if (vid) { vid.pause(); vid.currentTime = 0; vid.style.display = 'none'; }
+    const intro = document.getElementById('s17intro');
+    if (intro) intro.style.display = 'flex';
     transitioning = true;
     slides[current].classList.remove('active');
     current  = idx;
@@ -1585,9 +1589,16 @@
 
   /* ── Advance (step or slide) ──────────────────────────────── */
   function advance() {
-    // Teaser video slide — click pauses; second click advances
+    // Teaser video slide — intro → playing → paused → next
     if (current === 18) {
       const vid = document.getElementById('s17vid');
+      const intro = document.getElementById('s17intro');
+      if (intro.style.display !== 'none') {
+        intro.style.display = 'none';
+        vid.style.display = 'block';
+        vid.currentTime = 0; vid.play();
+        return;
+      }
       if (vid && !vid.paused && !vid.ended) { vid.pause(); return; }
       if (current < TOTAL - 1) showSlide(current + 1);
       return;
@@ -1657,10 +1668,6 @@
       });
     }
     if (idx === 15) spawnParticles(); // Slide 16 logo reveal
-    if (idx === 18) { // Teaser video slide — autoplay with sound
-      const vid = document.getElementById('s17vid');
-      if (vid) { vid.currentTime = 0; vid.play(); }
-    }
   }
 
   /* ── On-step hooks ────────────────────────────────────────── */
@@ -1752,36 +1759,28 @@
   function updateUI() {
     document.getElementById('progressBar').style.width = ((current + 1) / TOTAL * 100) + '%';
     document.getElementById('slideCounter').textContent = (current + 1) + ' / ' + TOTAL;
-    document.querySelectorAll('.sp-btn').forEach((btn, i) => {
+    document.querySelectorAll('.sn-btn').forEach((btn, i) => {
       btn.classList.toggle('active', i === current);
     });
   }
 
-  /* ── Slide picker ─────────────────────────────────────────── */
-  (function buildPicker() {
-    const picker = document.getElementById('slidePicker');
+  /* ── Slide nav strip ──────────────────────────────────────── */
+  (function buildNav() {
+    const nav = document.getElementById('slideNav');
     for (let i = 0; i < TOTAL; i++) {
       const btn = document.createElement('button');
-      btn.className = 'sp-btn';
+      btn.className = 'sn-btn';
       btn.textContent = i + 1;
-      btn.onclick = e => { e.stopPropagation(); showSlide(i); closePicker(); };
-      picker.appendChild(btn);
+      btn.onclick = e => { e.stopPropagation(); showSlide(i); };
+      nav.appendChild(btn);
     }
   })();
 
-  function togglePicker() {
-    document.getElementById('slidePicker').classList.toggle('open');
-  }
-  function closePicker() {
-    document.getElementById('slidePicker').classList.remove('open');
-  }
-
   /* ── Input handling ───────────────────────────────────────── */
-  document.addEventListener('click', () => { closePicker(); advance(); });
+  document.addEventListener('click', () => advance());
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closePicker(); return; }
-    if ([' ','ArrowRight','ArrowDown'].includes(e.key)) { e.preventDefault(); advance(); }
+if ([' ','ArrowRight','ArrowDown'].includes(e.key)) { e.preventDefault(); advance(); }
     if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); back(); }
     const n = parseInt(e.key, 10);
     if (n >= 1 && n <= 9 && n <= TOTAL) showSlide(n - 1);

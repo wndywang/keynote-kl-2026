@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>AI as a Brand Partner — Wendy Wang | KL 2026</title>
-  <!-- v20260422-16 -->
+  <!-- v20260422-17 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
@@ -1584,20 +1584,7 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 17 — LAUNCH VIDEO
-  ══════════════════════════════════════════ -->
-  <div class="slide" id="s17">
-    <div id="s17intro" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5vh;text-align:center;">
-      <div style="font-size:clamp(10px,.85vw,13px);font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);">Now Showing</div>
-      <div style="font-size:clamp(42px,7vw,124px);font-weight:900;letter-spacing:-0.045em;line-height:1;">Introducing<br><span style="color:var(--lime);">GetUGC.io</span></div>
-      <div style="font-size:clamp(13px,1.3vw,20px);color:var(--muted);font-weight:500;margin-top:1vh;">Click to play</div>
-    </div>
-    <video id="s17vid" src="assets/KeynoteTeaser.mp4" playsinline
-      style="width:100%;height:100%;object-fit:contain;display:none;"></video>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       SLIDE 18 — CLARD CASE STUDY
+       SLIDE 17 — CLARD CASE STUDY
   ══════════════════════════════════════════ -->
   <div class="slide" id="s-clard" style="background:#06090F;padding:4vh 5vw 6vh;flex-direction:column;justify-content:flex-start;align-items:stretch;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2vh;flex-shrink:0;">
@@ -1765,7 +1752,20 @@
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 20 — THE CLOSE (was 18)
+       SLIDE 21 — LAUNCH VIDEO
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s17">
+    <div id="s17intro" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5vh;text-align:center;">
+      <div style="font-size:clamp(10px,.85vw,13px);font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);">Now Showing</div>
+      <div style="font-size:clamp(42px,7vw,124px);font-weight:900;letter-spacing:-0.045em;line-height:1;">Introducing<br><span style="color:var(--lime);">GetUGC.io</span></div>
+      <div style="font-size:clamp(13px,1.3vw,20px);color:var(--muted);font-weight:500;margin-top:1vh;">Click to play</div>
+    </div>
+    <video id="s17vid" src="assets/KeynoteTeaser.mp4" playsinline
+      style="width:100%;height:100%;object-fit:contain;display:none;"></video>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 22 — THE CLOSE
   ══════════════════════════════════════════ -->
   <div class="slide" id="s18">
     <div style="display:flex;flex-direction:column;align-items:center;gap:2vh;">
@@ -1832,7 +1832,7 @@
   /* ── Advance (step or slide) ──────────────────────────────── */
   function advance() {
     // Teaser video slide — intro → playing → paused → next
-    if (current === 18) {
+    if (current === 20) {
       const vid = document.getElementById('s17vid');
       const intro = document.getElementById('s17intro');
       if (intro.style.display !== 'none') {
